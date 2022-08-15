@@ -84,21 +84,27 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('/img/anggota/adel.jpg') }}" alt="" />
-                            <h4 class="title">Adelia Rahma</h4>
-                            <p class="description">Cecan Multiverse</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/adeliarhm.a/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
+                    @foreach ($members as $member)
+                        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
+                            data-aos-delay="300">
+                            <div class="icon-box">
+                                @if ($member->image)
+                                    <img src="{{ asset('storage/' . $member->image) }}" alt="" />
+                                @else
+                                    <img src="{{ url('img/team/team-1.jpg') }}" alt="" />
+                                @endif
+                                <h4 class="title">{{ $member->fullName }}</h4>
+                                <p class="description">{{ $member->words }}</p>
+                                <div class="icon-area">
+                                    <a href="https://www.instagram.com/adeliarhm.a/">
+                                        <div class="icon"><i class="bx bxl-instagram"></i></div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
 
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
+                    {{-- <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
                         data-aos-delay="300">
                         <div class="icon-box">
                             <img src="{{ url('img/anggota/adit.JPG') }}" alt="" />
@@ -589,7 +595,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>

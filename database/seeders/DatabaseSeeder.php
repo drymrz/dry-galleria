@@ -56,11 +56,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Member::create([
-            'nik' => '13419005',
+            'nis' => '13419005',
             'fullName' => 'Adry Mirza',
             'words' => 'Nolep Multitalent',
             'ig_link' => 'adry_mirza',
-            'web_link' => 'adrymirza.xyz'
+            'web_link' => 'adrymirza.xyz',
+            'createdBy' => '4',
+            'lastEdit' => '4',
         ]);
 
         // Post::create([

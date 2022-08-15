@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class MemberController extends Controller
 {
@@ -38,7 +41,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nik' => 'required|unique:members',
+            'nis' => 'required|unique:members',
             'fullName' => 'required|max:255',
             'words' => 'required',
             'image' => 'image|file|max:1024',
@@ -47,6 +50,9 @@ class MemberController extends Controller
         if ($request->file('image')) {
             $validatedData['image'] = $request->file('image')->store('member-photos');
         }
+
+        $validatedData['createdBy'] = auth()->user()->id;
+        $validatedData['lastEdit'] = auth()->user()->id;
 
         Member::create($validatedData);
 
@@ -61,7 +67,9 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-        //
+        return view('dashboard.members.show', [
+            "member" => $member
+        ]);
     }
 
     /**
@@ -72,7 +80,9 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        //
+        return view('dashboard.members.edit', [
+            "member" => $member,
+        ]);
     }
 
     /**
@@ -84,7 +94,30 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        //
+        $rules = [
+            'fullName' => 'required|max:255',
+            'words' => 'required',
+            'image' => 'image|file|max:1024',
+        ];
+
+        if ($request->nis != $member->nis) {
+            $rules['nis'] = 'required|unique:members';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        if ($request->file('image')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('image')->store('post-images');
+
+            $validatedData['lastEdit'] = auth()->user()->id;
+
+            Member::where('id', $member->id)->update($validatedData);
+
+            return redirect('/dashboard/members')->with('success', 'New member has been updated!');
+        }
     }
 
     /**
@@ -95,6 +128,7 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        //
+        Member::destroy($member->id);
+        return redirect('/dashboard/members')->with('success', 'Post has been deleted!');
     }
 }

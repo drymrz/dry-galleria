@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\MemberController;
+use App\Models\Member;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +31,10 @@ Route::get('/', function () {
     return view('home', [
         "title" => 'Home',
         "active" => 'home',
+        "members" => Member::orderBy('fullName', 'asc')->get()
     ]);
 });
+
 
 Route::get('/about', function () {
     return view('about', [
@@ -66,5 +69,4 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
-
 Route::resource('/dashboard/members', MemberController::class)->middleware('auth');

@@ -27,15 +27,15 @@
                     @foreach ($members as $member)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $member->nik }}</td>
+                            <td>{{ $member->nis }}</td>
                             <td>{{ $member->fullName }}</td>
                             <td>{{ $member->words }}</td>
                             <td class="text-center">
-                                <a href="/dashboard/members/{{ $member->nik }}" class="badge bg-info"><span
+                                <a href="/dashboard/members/{{ $member->nis }}" class="badge bg-info"><span
                                         data-feather="eye"></span></a>
-                                <a href="/dashboard/members/{{ $member->nik }}/edit" class="badge bg-warning"><span
+                                <a href="/dashboard/members/{{ $member->nis }}/edit" class="badge bg-warning"><span
                                         data-feather="edit"></span></a>
-                                <form action="/dashboard/members/{{ $member->nik }}" class="d-inline" method="post">
+                                <form action="/dashboard/members/{{ $member->nis }}" class="d-inline" method="post">
                                     @method('delete')
                                     @csrf
                                     <button class="badge bg-danger border-0"
