@@ -19,7 +19,7 @@
                 <div class="row no-gutters">
                     <div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-right">
                         <div class="content">
-                            <h3>SMK Negeri 7 Batam Rekayasa Perangkat Lunak 3 Angkatan 2</h3>
+                            <h3>Rekayasa Perangkat Lunak 3 Angkatan 2 <br> SMKN 7 Batam</h3>
                             <p>
                                 Rekayasa Perangkat Lunak adalah salah satu jurusan yang
                                 mempelajari tentang pengembangan perangkat-perangkat lunak
@@ -27,7 +27,7 @@
                                 organisasi dan manajemen kualitasnya.
                             </p>
 
-                            <a href="https://www.instagram.com/12.rpltigaa_/">
+                            <a href="https://www.instagram.com/12rpltigaaa_/" target="_blank">
                                 <svg class="text-white me-2" xmlns="http://www.w3.org/2000/svg" width="20"
                                     height="20" fill="currentColor" viewBox="0 0 16 16">
                                     <path
@@ -67,6 +67,13 @@
                                         12 Bidadari Cantik
                                     </p>
                                 </div>
+                                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                                    <i class='bx bxs-graduation'></i>
+                                    <h4>Pembubaran</h4>
+                                    <p>
+                                        Resmi melakukan Perpisahan pada 16 Juni 2022
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <!-- End .content-->
@@ -96,506 +103,25 @@
                                 <h4 class="title">{{ $member->fullName }}</h4>
                                 <p class="description">{{ $member->words }}</p>
                                 <div class="icon-area">
-                                    <a href="https://www.instagram.com/adeliarhm.a/">
-                                        <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                    </a>
+                                    @if ($member->ig_link)
+                                        <a href="https://www.instagram.com/{{ $member->ig_link }}/" target="_blank">
+                                            <div class="icon"><i class="bx bxl-instagram"></i></div>
+                                        </a>
+                                    @endif
+                                    @if ($member->web_link)
+                                        <a href="https://{{ $member->web_link }}" target="_blank">
+                                            <div class="icon"><i class="bx bx-globe"></i></div>
+                                        </a>
+                                    @endif
+                                    @if ($member->li_link)
+                                        <a href="{{ $member->li_link }}" target="_blank">
+                                            <div class="icon"><i class='bx bxl-linkedin-square'></i></i></div>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     @endforeach
-
-                    {{-- <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/adit.JPG') }}" alt="" />
-                            <h4 class="title">Aditya</h4>
-                            <p class="description">Gamers Gantenk Idaman</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/adityaputra.me/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/adry.jpg') }}" alt="" />
-                            <h4 class="title">Adry Mirza</h4>
-                            <p class="description">Nolep Multitalent</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/adry_mirza/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                                <a href="https://adrymirza.xyz">
-                                    <div class="icon"><i class="bx bx-globe"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/agif.JPG') }}" alt="" />
-                            <h4 class="title">Agif Ganim</h4>
-                            <p class="description">Abang Ganteng</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/agifgnim/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/aldo.JPG') }}" alt="" />
-                            <h4 class="title">Aldo Fradana</h4>
-                            <p class="description">Abang Cerita Sedih</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/aldo_fradana/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/arjun.JPG') }}" alt="" />
-                            <h4 class="title">Arjuna Anggara</h4>
-                            <p class="description">Ketua Kelas Idola</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/arjunnanggara20/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/asling.jpg') }}" alt="" />
-                            <h4 class="title">Asling Dwifandi</h4>
-                            <p class="description">Si Paling Bucin</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/aslingdwif_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/aufa.JPG') }}" alt="" />
-                            <h4 class="title">Aufa Husna</h4>
-                            <p class="description">Kakak Penyanyi</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/aufahsna_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/detra.JPG') }}" alt="" />
-                            <h4 class="title">Detra Octa</h4>
-                            <p class="description">Kakak Hits</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/dtraoctaa_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/nabilla.JPG') }}" alt="" />
-                            <h4 class="title">Eka Nabilla</h4>
-                            <p class="description">Jawa Manis</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/ekaanabillaa._/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/ekp.JPG') }}" alt="" />
-                            <h4 class="title">Eka Puspaningrum</h4>
-                            <p class="description">Coconut Sista</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/asteroid_u/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/erga.JPG') }}" alt="" />
-                            <h4 class="title">Erga Sanjaya</h4>
-                            <p class="description">Apek Laundry</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/ergasanjaya_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/nana.JPG') }}" alt="" />
-                            <h4 class="title">Farhanna Yasmin</h4>
-                            <p class="description">Korea Addicted</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/han.na_14/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/farrel.JPG') }}" alt="" />
-                            <h4 class="title">Farrel Adelar</h4>
-                            <p class="description">Sakamata Farrel?</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/farrelitsuka/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/hapis.JPG') }}" alt="" />
-                            <h4 class="title">Hafiz Alnazwa</h4>
-                            <p class="description">Bukan Budak Kecik Lagi</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/alnzw.hfz//">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/angga.jpeg') }}" alt="" />
-                            <h4 class="title">Herlangga Arianto</h4>
-                            <p class="description">Artis Kelas</p>
-                            <div class="icon-area">
-                                <a href="#">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/jachin.JPG') }}" alt="" />
-                            <h4 class="title">Jachinta Rizky</h4>
-                            <p class="description">Korea Addicted (2)</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/aei4jchn/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/akbar.JPG') }}" alt="" />
-                            <h4 class="title">M Akbar Agusri</h4>
-                            <p class="description">Apasih bar..</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/akb.ar_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/praja.JPG') }}" alt="" />
-                            <h4 class="title">Mahaprajadwipangga Semby</h4>
-                            <p class="description">Si Serba Bisa</p>
-                            <div class="icon-area">
-                                <a href="#">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/pio.JPG') }}" alt="" />
-                            <h4 class="title">Muhammad Alifio</h4>
-                            <p class="description">Pio Hotspot</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/yb_nan/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/ejak.JPG') }}" alt="" />
-                            <h4 class="title">Muhammad Reza</h4>
-                            <p class="description">Hengker Pro vvibu</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/rexza37/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/rizky.JPG') }}" alt="" />
-                            <h4 class="title">Muhammad Rizky</h4>
-                            <p class="description">Bang Blek</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/mhmmd.riizkyy_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/nurul.JPG') }}" alt="" />
-                            <h4 class="title">Nurul Kamilah</h4>
-                            <p class="description">Mbak Sekretaris</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/nrlkmlh3_/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/perzi.JPG') }}" alt="" />
-                            <h4 class="title">Perzi Zekni</h4>
-                            <p class="description">Abang Fakboi</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/putri.JPG') }}" alt="" />
-                            <h4 class="title">Putri Ahdarani</h4>
-                            <p class="description">Cabe Kelas</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/fahmi.JPG') }}" alt="" />
-                            <h4 class="title">Rahmat Fahmi</h4>
-                            <p class="description">Jedag Jedug Boys</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/awal.JPG') }}" alt="" />
-                            <h4 class="title">Rahmat Putra Awalludin</h4>
-                            <p class="description">Preman Nongsa</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/rista.JPG') }}" alt="" />
-                            <h4 class="title">Rista Marlina</h4>
-                            <p class="description">Kakak Receh</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/saban.JPG') }}" alt="" />
-                            <h4 class="title">Saban Bin Mohamad</h4>
-                            <p class="description">Kebanyakan Piagam Futsal</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/septi.JPG') }}" alt="" />
-                            <h4 class="title">Septian Eka</h4>
-                            <p class="description">Juara Karate</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/tapri.JPG') }}" alt="" />
-                            <h4 class="title">Taprihadi</h4>
-                            <p class="description">Soft Boy</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/widia.JPG') }}" alt="" />
-                            <h4 class="title">Widiati Yuli</h4>
-                            <p class="description">Kakak Receh</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/yoga.JPG') }}" alt="" />
-                            <h4 class="title">Yoga Subakti</h4>
-                            <p class="description">Bos iPhone</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/yusi.JPG') }}" alt="" />
-                            <h4 class="title">Yusiana Safriyanti</h4>
-                            <p class="description">Anak Pulau</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/zidan.JPG') }}" alt="" />
-                            <h4 class="title">Zidhan Afrisal</h4>
-                            <p class="description">Rada Aneh</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <div class="icon-box">
-                            <img src="{{ url('img/anggota/zul.JPG') }}" alt="" />
-                            <h4 class="title">Zulfikar Hadi</h4>
-                            <p class="description">Paman Fikar</p>
-                            <div class="icon-area">
-                                <a href="https://www.instagram.com/perzyz/">
-                                    <div class="icon"><i class="bx bxl-instagram"></i></div>
-                                </a>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </section>
