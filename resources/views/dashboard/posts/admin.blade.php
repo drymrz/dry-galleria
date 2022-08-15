@@ -2,7 +2,7 @@
 
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">My Posts</h1>
+        <h1 class="h2">All Posts</h1>
     </div>
 
     @if (session()->has('success'))
@@ -12,7 +12,6 @@
     @endif
     <div class="row justify-content-center">
         <div class="table-responsive col-lg-10">
-            <a href="/dashboard/posts/create" class="btn btn-primary btn-sm mb-2">Create new post</a>
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
@@ -45,6 +44,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="mb-5 mt-2 d-flex justify-content-center">
+            {{ $posts->links() }}
         </div>
     </div>
 @endsection

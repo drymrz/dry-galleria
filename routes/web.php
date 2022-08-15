@@ -75,5 +75,11 @@ Route::get('/dashboard/postadmin', [DashboardPostController::class, 'admin'])->m
 
 
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+Route::get('/dashboard/su/posts', function () {
+    return view('dashboard.posts.admin', [
+        'posts' => Post::latest()->paginate(10)->withQueryString()
+    ]);
+});
+
 Route::resource('/dashboard/members', MemberController::class)->middleware('auth');
-Route::resource('/dashboard/users', UserController::class)->middleware('auth');
+Route::resource('/dashboard/su/users', UserController::class)->middleware('auth');

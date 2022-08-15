@@ -19,6 +19,22 @@
                     Members
                 </a>
             </li>
+            @if (auth()->user()->isRole == '2')
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}"
+                        href="/dashboard/su/posts">
+                        <span data-feather="file-text"></span>
+                        All Posts
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('dashboard/su/users*') ? 'active' : '' }}"
+                        href="/dashboard/su/users">
+                        <span data-feather="user"></span>
+                        All Users
+                    </a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>

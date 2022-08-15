@@ -18,7 +18,6 @@ class DashboardPostController extends Controller
     public function index()
     {
         return view('dashboard.posts.index', [
-            "all" => Post::all(),
             "posts" => Post::where('user_id', auth()->user()->id)->get()
         ]);
     }
@@ -71,7 +70,7 @@ class DashboardPostController extends Controller
      */
     public function show(Post $post)
     {
-        if ($post->user->id !== auth()->user()->id) {
+        if (auth()->user()->isRole != "2" and $post->user->id !== auth()->user()->id) {
             abort(403);
         }
         return view('dashboard.posts.show', [
@@ -87,7 +86,7 @@ class DashboardPostController extends Controller
      */
     public function edit(Post $post)
     {
-        if ($post->user->id !== auth()->user()->id) {
+        if (auth()->user()->isRole != "2" and $post->user->id !== auth()->user()->id) {
             abort(403);
         }
 
