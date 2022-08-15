@@ -53,6 +53,10 @@ class MemberController extends Controller
 
         $validatedData['createdBy'] = auth()->user()->id;
         $validatedData['lastEdit'] = auth()->user()->id;
+        $validatedData['ig_link'] = $request->ig_link;
+        $validatedData['web_link'] = $request->web_link;
+        $validatedData['li_link'] = $request->li_link;
+
 
         Member::create($validatedData);
 
@@ -106,18 +110,22 @@ class MemberController extends Controller
 
         $validatedData = $request->validate($rules);
 
+
         if ($request->file('image')) {
             if ($request->oldImage) {
                 Storage::delete($request->oldImage);
             }
             $validatedData['image'] = $request->file('image')->store('post-images');
-
-            $validatedData['lastEdit'] = auth()->user()->id;
-
-            Member::where('id', $member->id)->update($validatedData);
-
-            return redirect('/dashboard/members')->with('success', 'New member has been updated!');
         }
+
+        $validatedData['lastEdit'] = auth()->user()->id;
+        $validatedData['ig_link'] = $request->ig_link;
+        $validatedData['web_link'] = $request->web_link;
+        $validatedData['li_link'] = $request->li_link;
+
+        Member::where('id', $member->id)->update($validatedData);
+
+        return redirect('/dashboard/members')->with('success', 'Member has been updated!');
     }
 
     /**
@@ -129,6 +137,6 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         Member::destroy($member->id);
-        return redirect('/dashboard/members')->with('success', 'Post has been deleted!');
+        return redirect('/dashboard/members')->with('success', 'Member has been deleted!');
     }
 }

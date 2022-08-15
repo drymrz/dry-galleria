@@ -60,28 +60,28 @@
                 <hr>
             </div>
             <div class="mb-3">
-                <label for="iglink" class="form-label">Username Instagram</label>
-                <input type="text" class="form-control @error('iglink') is-invalid @enderror" id="iglink"
-                    name="iglink" value="{{ old('iglink', $member->iglink) }}">
-                @error('iglink')
+                <label for="ig_link" class="form-label">Username Instagram</label>
+                <input type="text" class="form-control @error('ig_link') is-invalid @enderror" id="ig_link"
+                    name="ig_link" value="{{ old('ig_link', $member->ig_link) }}">
+                @error('ig_link')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="weblink" class="form-label">Website</label>
-                <input type="text" class="form-control @error('weblink') is-invalid @enderror" id="weblink"
-                    name="weblink" value="{{ old('weblink', $member->weblink) }}">
-                @error('weblink')
+                <label for="web_link" class="form-label">Website</label>
+                <input type="text" class="form-control @error('web_link') is-invalid @enderror" id="web_link"
+                    name="web_link" value="{{ old('web_link', $member->web_link) }}">
+                @error('web_link')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="mb-3">
-                <label for="lilink" class="form-label">LinkedIn</label>
-                <input type="text" class="form-control @error('lilink') is-invalid @enderror" id="lilink"
-                    name="lilink" value="{{ old('lilink', $member->lilink) }}">
-                @error('lilink')
+                <label for="li_link" class="form-label">LinkedIn Account Link</label>
+                <input type="text" class="form-control @error('li_link') is-invalid @enderror" id="li_link"
+                    name="li_link" value="{{ old('li_link', $member->li_link) }}">
+                @error('li_link')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
