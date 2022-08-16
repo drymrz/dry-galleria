@@ -9,6 +9,7 @@
         rel="stylesheet">
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link href="/vendor/boxicons-2.1.2/css/boxicons.min.css" rel="stylesheet" />
     <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />

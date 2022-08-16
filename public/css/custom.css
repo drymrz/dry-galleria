@@ -1,0 +1,16 @@
+@media screen and (min-width:1024px) {
+    .posts-image{
+        height: 250px;
+    }
+
+    .posts-body{
+        height: 230px;
+    }
+}
+
+@media screen and (max-width : 650px) {
+    .phone-wrap{
+        width: 100% !important;
+        padding: 0 !important;
+    }
+}

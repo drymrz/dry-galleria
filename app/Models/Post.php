@@ -10,7 +10,7 @@ class Post extends Model
 
     use HasFactory;
     protected $guarded = ['id'];
-    protected $with = ['category', 'user'];
+    protected $with = ['category', 'user', 'images'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -42,6 +42,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(PostImage::class);
     }
 
     public function getRouteKeyName()
