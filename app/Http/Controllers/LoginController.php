@@ -10,7 +10,7 @@ class LoginController extends Controller
     public function index()
     {
         return view('login.index', [
-            'title' => 'Login',
+            'title' => 'login',
             'active' => 'login'
         ]);
     }
@@ -37,6 +37,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerate();
 
-        return redirect('/');
+        return redirect('/login')->with('logout', 'Anda Telah Logout !');
     }
 }

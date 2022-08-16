@@ -24,8 +24,8 @@
 <body>
 
     @include('partials.navbar')
-    <div class="{{ $active === 'home' ? '' : 'container mt-5' }}">
-        <div class="{{ $active === 'home' ? '' : 'pt-5' }}">
+    <div class="{{ $active != 'posts' ? '' : 'container mt-5' }}">
+        <div class="{{ $active != 'posts'? '' : 'pt-5' }}">
             @yield('container')
         </div>
     </div>

@@ -14,6 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->isRole != "2") {
+            abort(403);
+        }
         return view('dashboard.users.index', [
             "users" => User::all()
         ]);
