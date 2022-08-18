@@ -31,16 +31,38 @@
                 font-size: 3.5rem;
             }
         }
-
     </style>
 
 
     <!-- Custom styles -->
     <link href="/css/dashboard.css" rel="stylesheet">
-
+    {{-- filepond --}}
+    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
     {{-- Trix Editor --}}
     <link rel="stylesheet" type="text/css" href="/css/trix.css">
-    <script type="text/javascript" src="/js/trix.js"></script>
+    <style>
+        .filepond--warning {
+            position: absolute;
+            background: #f7bdbd;
+            color: #000;
+            border-radius: 999em;
+            font-size: .875em;
+            margin-top: 1em;
+            display: inline-block;
+            padding: .25em 1em;
+            opacity: 0;
+            white-space: nowrap;
+            transform: translateY(1em) translateX(-50%);
+            transition: opacity .15s ease-out, transform .5s ease-out
+        }
+
+        .filepond--warning[data-state=visible] {
+            opacity: 1;
+            transform: translateY(0) translateX(-50%)
+        }
+    </style>
 </head>
 
 <body>
@@ -66,7 +88,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="/js/trix.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js">
+    </script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script src="/js/dashboard.js"></script>
+    @yield('scripts')
 </body>
 
 </html>

@@ -11,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Models\Member;
 
@@ -87,3 +88,6 @@ Route::get('/dashboard/su/posts', function () {
 
 Route::resource('/dashboard/members', MemberController::class)->middleware('auth');
 Route::resource('/dashboard/su/users', UserController::class)->middleware('auth');
+
+Route::post('/upload', [UploadController::class, 'store']);
+// Route::delete('/upload', [UploadController::class, 'destroy']);
