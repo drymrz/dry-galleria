@@ -18,7 +18,8 @@ class UserController extends Controller
             abort(403);
         }
         return view('dashboard.users.index', [
-            "users" => User::all()
+            "users" => User::orderBy('name', 'asc')->paginate(10),
+            "active" => "Registered Users"
         ]);
     }
 

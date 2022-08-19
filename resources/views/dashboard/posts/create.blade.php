@@ -6,13 +6,7 @@
         display: none;
     }
 </style>
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Create New Post</h1>
-</div>
-
 <div class="col-lg-8">
-
     <form class="mb-5" id="postForm" action="/dashboard/posts" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">

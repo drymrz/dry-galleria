@@ -18,7 +18,8 @@ class MemberController extends Controller
     public function index()
     {
         return view('dashboard.members.index', [
-            "members" => Member::orderBy('fullName', 'asc')->get()
+            "members" => Member::orderBy('nis', 'asc')->paginate(10),
+            "active" => "All Class Members"
         ]);
     }
 
@@ -29,7 +30,9 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('dashboard.members.create');
+        return view('dashboard.members.create', [
+            "active" => "Add New Class Member"
+        ]);
     }
 
     /**
@@ -72,7 +75,8 @@ class MemberController extends Controller
     public function show(Member $member)
     {
         return view('dashboard.members.show', [
-            "member" => $member
+            "member" => $member,
+            "active" => "Class Member / " . $member->fullName
         ]);
     }
 
@@ -86,6 +90,7 @@ class MemberController extends Controller
     {
         return view('dashboard.members.edit', [
             "member" => $member,
+            "active" => "Edit Class Member / " . $member->fullName
         ]);
     }
 
