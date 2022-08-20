@@ -72,10 +72,17 @@
                 <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
                     <a class="nav-link" href="/posts">Postingan </a>
                 </li>
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link scrollto active" href="/login">Login</a>
+                @auth
+                    <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
+                        <a class="nav-link scrollto active" href="/dashboard">Dashboard</a>
 
-                </li>
+                    </li>
+                @else
+                    <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
+                        <a class="nav-link scrollto active" href="/login">Login</a>
+
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>
