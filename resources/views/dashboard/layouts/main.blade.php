@@ -52,6 +52,12 @@
             opacity: 1;
             transform: translateY(0) translateX(-50%)
         }
+
+        @media screen and (min-width:1280px) {
+            .sidebar-backdrop {
+                display: none
+            }
+        }
     </style>
 </head>
 
@@ -59,11 +65,44 @@
 
     <div id="app">
         @include('dashboard.layouts.sidebar')
-        <div class="page-heading">
-            <h3>{{$active}}</h3>
+        @include('dashboard.layouts.header')
+        <div id="main-content">
+            <div class="page-title mb-3">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>{{ $active }}</h3>
+                    </div>
+                    @php
+                        $fullUrl = request()->path();
+                        $url = explode('/', $fullUrl);
+                    @endphp
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb text-capitalize">
+                                <li class="breadcrumb-item">
+                                    <a href="/dashboard">{{ $url[0] }}</a>
+                                </li>
+                                @php
+                                    unset($url[0]);
+                                    if (sizeof($url) > 1) {
+                                        if (str_contains($url[2], '-')) {
+                                            unset($url[2]);
+                                        }
+                                    }
+                                @endphp
+                                @foreach ($url as $u)
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ $u }}
+                                    </li>
+                                @endforeach
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            @yield('container')
+            @include('dashboard.layouts.footer')
         </div>
-        @yield('container')
-        @include('dashboard.layouts.footer')
     </div>
     </div>
 
@@ -73,11 +112,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
         integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js">
-    </script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script src="/adminview/assets/js/bootstrap.js"></script>

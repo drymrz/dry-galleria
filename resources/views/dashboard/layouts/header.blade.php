@@ -1,59 +1,107 @@
-<header class="navbar sticky-top flex-md-nowrap p-0 bg-primary justify-content-lg-end" id="main" style="height: 75px">
-    {{-- <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/dashboard/">Belajar Laravel</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-    <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-            <form action="/logout" method="post">
-                @csrf
-                <button type="submit" class="nav-link px-3 bg-dark border-0">
-                    <span data-feather="log-out"></span>
-                    Logout
-                </button>
-            </form>
-        </div>
-    </div> --}}
-    <a href="#" class="burger-btn d-block d-xl-none ms-4" style="color: #fff">
-        <i class="bi bi-justify fs-3"></i>
-    </a>
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle me-1" type="button" id="dropdownMenuButton"
-            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Primary
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Option 1</a>
-            <a class="dropdown-item" href="#">Option 2</a>
-            <a class="dropdown-item" href="#">Option 3</a>
-        </div>
-    </div>
-    {{-- <div class="dropdown mx-5">
-        <a class="nav-link nav-link-lg dropdown-toggle" data-bs-toggle="dropdown" style="color: #fff">
-            <div class="avatar avatar">
-                <img src="/adminview/assets/images/faces/1.jpg" alt="Face 1">
+<header class="mb-3">
+    <nav class="navbar navbar-expand navbar-light navbar-top">
+        <div class="container-fluid">
+            <a href="#" class="burger-btn d-block">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-lg-0">
+                    <li class="nav-item dropdown me-3">
+                        <a class="nav-link active dropdown-toggle text-gray-600" href="#"
+                            data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <i class="bi bi-bell bi-sub fs-4"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown"
+                            aria-labelledby="dropdownMenuButton">
+                            <li class="dropdown-header">
+                                <h6>Notifications</h6>
+                            </li>
+                            <li class="dropdown-item notification-item">
+                                <a class="d-flex align-items-center" href="#">
+                                    <div class="notification-icon bg-primary">
+                                        <i class="bi bi-cart-check"></i>
+                                    </div>
+                                    <div class="notification-text ms-4">
+                                        <p class="notification-title font-bold">
+                                            Successfully check out
+                                        </p>
+                                        <p class="notification-subtitle font-thin text-sm">
+                                            Order ID #256
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="dropdown-item notification-item">
+                                <a class="d-flex align-items-center" href="#">
+                                    <div class="notification-icon bg-success">
+                                        <i class="bi bi-file-earmark-check"></i>
+                                    </div>
+                                    <div class="notification-text ms-4">
+                                        <p class="notification-title font-bold">
+                                            Homework submitted
+                                        </p>
+                                        <p class="notification-subtitle font-thin text-sm">
+                                            Algebra math homework
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <p class="text-center py-2 mb-0">
+                                    <a href="#">See all notification</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-menu d-flex">
+                            <div class="user-name text-end me-3">
+                                @php
+                                    $fullname = auth()->user()->name;
+                                    $name = explode(' ', $fullname);
+                                @endphp
+                                <h6 class="mb-0 text-gray-600 text-truncate">
+                                    {{ $name[0] }} {{ $name[1] ? $name[1] : '' }}</h6>
+                                <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                            </div>
+                            <div class="user-img d-flex align-items-center">
+                                <div class="avatar avatar-md">
+                                    <img src="/adminview/assets/images/faces/1.jpg">
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton"
+                        style="min-width: 11rem">
+                        <li>
+                            <h6 class="dropdown-header">Hello, {{ $name[0] }}!</h6>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
+                                Profile</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form action="/logout" method="post">
+                                @csrf
+                                <button type="submit" class='dropdown-item border-0 bg-white'>
+                                    <i class="icon-mid bi bi-box-arrow-left me-2"></i>
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="d-md-inline-block d-none">
-                Halo, {{ auth()->user()->username }}
-            </div>
-        </a>
-        <div class="dropdown-menu">
-            <div class="dropdown-title">Logged in 5 min ago</div>
-            <a href="features-profile.html" class="dropdown-item has-icon">
-                <i class="far fa-user"></i> Profile
-            </a>
-            <a href="features-activities.html" class="dropdown-item has-icon">
-                <i class="fas fa-bolt"></i> Activities
-            </a>
-            <a href="features-settings.html" class="dropdown-item has-icon">
-                <i class="fas fa-cog"></i> Settings
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item has-icon text-danger">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
         </div>
-    </div> --}}
+    </nav>
 </header>

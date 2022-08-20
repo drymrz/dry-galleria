@@ -1,55 +1,16 @@
-{{-- <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" aria-current="page"
-                    href="/dashboard">
-                    <span data-feather="home"></span>
-                    Dashboard
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/posts*') ? 'active' : '' }}" href="/dashboard/posts">
-                    <span data-feather="file-text"></span>
-                    My Posts
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/members*') ? 'active' : '' }}" href="/dashboard/members">
-                    <span data-feather="user"></span>
-                    Members
-                </a>
-            </li>
-            @if (auth()->user()->isRole == '2')
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}" href="/dashboard/su/posts">
-                    <span data-feather="file-text"></span>
-                    All Posts
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ Request::is('dashboard/su/users*') ? 'active' : '' }}" href="/dashboard/su/users">
-                    <span data-feather="user"></span>
-                    All Users
-                </a>
-            </li>
-            @endif
-        </ul>
-    </div>
-</nav> --}}
-
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
 
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="/dashboard"><img src="/adminview/assets/images/logo/logo.svg" alt="Logo" srcset=""></a>
+                    <a href="/dashboard"><img src="/adminview/assets/images/logo/logo.svg" alt="Logo"
+                            srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20"
-                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                        aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
+                        height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                         <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path
@@ -111,55 +72,36 @@
                 </li>
 
                 @if (auth()->user()->isRole != '0')
-                <li class="sidebar-item {{ Request::is('dashboard/members*') ? 'active' : '' }} ">
-                    <a href="/dashboard/members" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
-                        <span>Class Mate</span>
-                    </a>
-                </li>
+                    <li class="sidebar-item {{ Request::is('dashboard/members*') ? 'active' : '' }} ">
+                        <a href="/dashboard/members" class='sidebar-link'>
+                            <i class="bi bi-people-fill"></i>
+                            <span>Class Mate</span>
+                        </a>
+                    </li>
                 @endif
                 @if (auth()->user()->isRole == '2')
-                <li class="sidebar-item {{ Request::is('dashboard/su*') ? 'active' : '' }} has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-incognito"></i>
-                        <span>Super User</span>
-                    </a>
-                    <ul class="submenu active">
-                        <li class="submenu-item {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}">
-                            <a href="/dashboard/su/posts">All Post</a>
-                        </li>
-                        <li class="submenu-item {{ Request::is('dashboard/su/categories*') ? 'active' : '' }}">
-                            <a href="/dashboard">Categories</a>
-                        </li>
-                        <li class="submenu-item {{ Request::is('dashboard/su/users*') ? 'active' : '' }}">
-                            <a href="/dashboard/su/users">Registered User</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="sidebar-item {{ Request::is('dashboard/su*') ? 'active' : '' }} has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-incognito"></i>
+                            <span>Super User</span>
+                        </a>
+                        <ul class="submenu active">
+                            <li class="submenu-item {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}">
+                                <a href="/dashboard/su/posts">All Post</a>
+                            </li>
+                            <li class="submenu-item {{ Request::is('dashboard/su/categories*') ? 'active' : '' }}">
+                                <a href="/dashboard">Categories</a>
+                            </li>
+                            <li class="submenu-item {{ Request::is('dashboard/su/users*') ? 'active' : '' }}">
+                                <a href="/dashboard/su/users">Registered User</a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
-                <li class="sidebar-title">Profile</li>
-                <li class="sidebar-item">
-                    <a href="/" class='sidebar-link'>
-                        <i class="bi bi-person-lines-fill"></i>
-                        <span>Edit Profile</span>
-                    </a>
-                    <form action="/logout" method="post">
-                        @csrf
-                        <button type="submit" class='sidebar-link border-0 bg-white'>
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span>Logout</span>
-                        </button>
-                    </form>
-                </li>
             </ul>
         </div>
 
     </div>
 </div>
 
-<div id="main">
-    <header class="mb-3">
-        <a href="#" class="burger-btn d-block d-xl-none">
-            <i class="bi bi-justify fs-3"></i>
-        </a>
-    </header>
+<div id="main" class="layout-navbar">
