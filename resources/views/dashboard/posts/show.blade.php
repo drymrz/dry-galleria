@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row my-4">
         <div class="col-lg-8">
-            <h2>{{ $post->title }}</h2>
             <a href="{{ url()->previous() }}" class="btn btn-success" style="font-size:12px"><span
                     data-feather="arrow-left"></span> Back</a>
             <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-warning" style="font-size:12px"><span

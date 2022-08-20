@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostImage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -19,7 +20,8 @@ class DashboardPostController extends Controller
     public function index()
     {
         return view('dashboard.posts.index', [
-            "posts" => Post::latest()->where('user_id', auth()->user()->id)->paginate(10)
+            "posts" => Post::latest()->where('user_id', auth()->user()->id)->paginate(10),
+            "active" => "My Posts"
         ]);
     }
 
@@ -31,7 +33,8 @@ class DashboardPostController extends Controller
     public function create()
     {
         return view('dashboard.posts.create', [
-            "categories" => Category::all()
+            "categories" => Category::all(),
+            "active" => "Create New Post"
         ]);
     }
 
@@ -50,25 +53,20 @@ class DashboardPostController extends Controller
             'body' => 'required'
         ]);
 
-        // if ($request->file('image')) {
-        //     $validatedData['image'] = $request->file('image')->store('post-images');
-        // }
-
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
-
         $newPost = Post::create($validatedData);
+
         if ($request->has('image')) {
-            foreach ($request->file('image') as $image) {
-                $imageName = $validatedData['title'] . '-image-' . rand(1, 2000) . '.' . $image->extension();
-                $image->move('storage/post-images', $imageName);
+            foreach ($request->image as $image) {
+                $imageName = $validatedData['slug'] . '-image-' . rand(1, 2000) . '.jpg';
+                Storage::move('/post-images/' . $image, '/post-images/' . $imageName);
                 PostImage::create([
                     'post_id' => $newPost->id,
                     'image_name' => $imageName
                 ]);
             }
         }
-
         return redirect('/dashboard/posts')->with('success', 'New post has been added!');
     }
 
@@ -85,7 +83,8 @@ class DashboardPostController extends Controller
         }
         return view('dashboard.posts.show', [
             'post' => $post,
-            'images' => $post->images
+            'images' => $post->images,
+            'active' => "My Post / " . $post->title
         ]);
     }
 
@@ -103,7 +102,8 @@ class DashboardPostController extends Controller
 
         return view('dashboard.posts.edit', [
             "post" => $post,
-            "categories" => Category::all()
+            "categories" => Category::all(),
+            "active" => "Edit Post / " . $post->title
         ]);
     }
 

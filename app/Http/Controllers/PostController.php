@@ -23,7 +23,7 @@ class PostController extends Controller
             $title = ' oleh ' . $author->name;
         }
 
-        return view('posts', [
+        return view('frontview.posts', [
             "title" => 'Semua Postingan' . $title,
             "active" => 'posts',
             "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(7)->withQueryString(),
@@ -32,7 +32,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('post', [
+        return view('frontview.post', [
             "title" => 'Post',
             "active" => 'posts',
             "post" => $post

@@ -11,6 +11,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use App\Models\Member;
 
@@ -25,23 +26,11 @@ use App\Models\Member;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', function () {
-    return view('home', [
+    return view('frontview/home', [
         "title" => 'Home',
         "active" => 'home',
         "members" => Member::orderBy('fullName', 'asc')->get()
-    ]);
-});
-
-
-Route::get('/about', function () {
-    return view('about', [
-        "title" => 'About',
-        "active" => 'about',
     ]);
 });
 
@@ -67,7 +56,9 @@ Route::get('/register', [RegisterController::class, 'index'])->middleware('guest
 Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/dashboard', function () {
-    return view('dashboard.index');
+    return view('dashboard.index', [
+        "active" => 'Dashboard Statistic'
+    ]);
 })->middleware('auth');
 
 
@@ -81,9 +72,12 @@ Route::get('/dashboard/su/posts', function () {
         abort(403);
     }
     return view('dashboard.posts.admin', [
-        'posts' => Post::latest()->paginate(10)->withQueryString()
+        'posts' => Post::latest()->paginate(10)->withQueryString(),
+        'active' => "Super User / All Posts"
     ]);
 })->middleware('auth');
 
 Route::resource('/dashboard/members', MemberController::class)->middleware('auth');
 Route::resource('/dashboard/su/users', UserController::class)->middleware('auth');
+
+Route::post('/upload', [UploadController::class, 'store']);
