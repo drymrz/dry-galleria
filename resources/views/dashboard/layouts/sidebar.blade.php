@@ -137,6 +137,20 @@
                     </ul>
                 </li>
                 @endif
+                <li class="sidebar-title">Profile</li>
+                <li class="sidebar-item">
+                    <a href="/" class='sidebar-link'>
+                        <i class="bi bi-person-lines-fill"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class='sidebar-link border-0 bg-white'>
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
 

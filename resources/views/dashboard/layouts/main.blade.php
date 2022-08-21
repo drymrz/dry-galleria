@@ -84,8 +84,6 @@
     <script src="/adminview/assets/js/app.js"></script>
 
     <!-- Need: Apexcharts -->
-    <script src="/adminview/assets/extensions/apexcharts/apexcharts.min.js"></script>
-    <script src="/adminview/assets/js/pages/dashboard.js"></script>
 
     {{-- trix --}}
     <script type="text/javascript" src="/adminview/js/trix.js"></script>
