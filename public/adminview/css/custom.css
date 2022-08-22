@@ -1,0 +1,47 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+.filepond--warning {
+    position: absolute;
+    background: #f7bdbd;
+    color: #000;
+    border-radius: 999em;
+    font-size: 0.875em;
+    margin-top: 1em;
+    display: inline-block;
+    padding: 0.25em 1em;
+    opacity: 0;
+    white-space: nowrap;
+    transform: translateY(1em) translateX(-50%);
+    transition: opacity 0.15s ease-out, transform 0.5s ease-out;
+}
+
+.filepond--warning[data-state="visible"] {
+    opacity: 1;
+    transform: translateY(0) translateX(-50%);
+}
+
+@media screen and (min-width: 1280px) {
+    .sidebar-backdrop {
+        display: none;
+    }
+}
+
+trix-toolbar .trix-button-group[data-trix-button-group="file-tools"] {
+    display: none;
+}
+
+body.theme-dark trix-toolbar .trix-button-group {
+    background-color: white;
+}

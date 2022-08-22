@@ -4,77 +4,43 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Belajar Laravel | Dashboard</title>
+
+    {{-- Core CSS --}}
     <link rel="stylesheet" href="/adminview/assets/css/main/app.css">
     <link rel="stylesheet" href="/adminview/assets/css/main/app-dark.css">
+    <link rel="stylesheet" href="/adminview/css/custom.css">
+
+    {{-- Icon --}}
     <link rel="shortcut icon" href="/adminview/assets/images/logo/favicon.svg" type="image/x-icon">
     <link rel="shortcut icon" href="/adminview/assets/images/logo/favicon.png" type="image/png">
     <link rel="stylesheet" href="/adminview/assets/css/shared/iconly.css">
 
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-    {{-- filepond --}}
+    {{-- Filepond Styles --}}
     <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet" />
+
     {{-- Trix Editor --}}
     <link rel="stylesheet" type="text/css" href="/adminview/css/trix.css">
-    <style>
-        .filepond--warning {
-            position: absolute;
-            background: #f7bdbd;
-            color: #000;
-            border-radius: 999em;
-            font-size: .875em;
-            margin-top: 1em;
-            display: inline-block;
-            padding: .25em 1em;
-            opacity: 0;
-            white-space: nowrap;
-            transform: translateY(1em) translateX(-50%);
-            transition: opacity .15s ease-out, transform .5s ease-out
-        }
-
-        .filepond--warning[data-state=visible] {
-            opacity: 1;
-            transform: translateY(0) translateX(-50%)
-        }
-
-        @media screen and (min-width:1280px) {
-            .sidebar-backdrop {
-                display: none
-            }
-        }
-    </style>
 </head>
 
 <body>
+    @include('sweetalert::alert')
 
     <div id="app">
         @include('dashboard.layouts.sidebar')
         @include('dashboard.layouts.header')
         <div id="main-content">
-            <div class="page-title mb-3">
+            <div class="page-title mb-4">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>{{ $active }}</h3>
                     </div>
                     @php
-                        $fullUrl = request()->path();
-                        $url = explode('/', $fullUrl);
+                    $fullUrl = request()->path();
+                    $url = explode('/', $fullUrl);
                     @endphp
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -83,17 +49,17 @@
                                     <a href="/dashboard">{{ $url[0] }}</a>
                                 </li>
                                 @php
-                                    unset($url[0]);
-                                    if (sizeof($url) > 1) {
-                                        if (str_contains($url[2], '-')) {
-                                            unset($url[2]);
-                                        }
-                                    }
+                                unset($url[0]);
+                                if (sizeof($url) > 1) {
+                                if (str_contains($url[2], '-')) {
+                                unset($url[2]);
+                                }
+                                }
                                 @endphp
                                 @foreach ($url as $u)
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        {{ $u }}
-                                    </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    {{ $u }}
+                                </li>
                                 @endforeach
                             </ol>
                         </nav>
@@ -105,23 +71,31 @@
         </div>
     </div>
     </div>
+    {{--Jquery --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous">
+    {{-- SweetAlert2 --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+    {{-- Filepond JS --}}
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"
-        integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous">
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js">
     </script>
-    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script
+        src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js">
+    </script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
     <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+    {{-- Core JS --}}
     <script src="/adminview/assets/js/bootstrap.js"></script>
     <script src="/adminview/assets/js/app.js"></script>
 
-    <!-- Need: Apexcharts -->
-
-    {{-- trix --}}
+    {{-- Trix JS --}}
     <script type="text/javascript" src="/adminview/js/trix.js"></script>
+
+    {{-- PageJs --}}
     @yield('scripts')
 </body>
 

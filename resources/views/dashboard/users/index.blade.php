@@ -7,10 +7,16 @@
     {{ session('success') }}
 </div>
 @endif
+@php
+use App\Models\User;
+@endphp
 <div class="row justify-content-center">
     <div class="card col-lg-10">
-        <div class="d-flex justify-content-end mt-3">
-            <a href="/dashboard/users/create" class="btn btn-primary icon mb-2"><i class="bi bi-plus-lg"></i></a>
+        <div class="d-flex justify-content-end justify-content-md-between align-items-center mt-3 mb-2">
+            <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ User::get()->count() }}
+                entries</p>
+            <a href="/dashboard/users/create" class="btn btn-primary icon mb-2">Add New User <i
+                    class="bi bi-plus-lg"></i></a>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
@@ -31,14 +37,14 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td class="text-center">
-                            <a href="/dashboard/users/{{ $user->username }}" class="btn btn-info icon"><i
+                            <a href="/dashboard/users/{{ $user->username }}" class="btn btn-sm btn-info icon"><i
                                     class="bi bi-eye"></i></a>
-                            <a href="/dashboard/users/{{ $user->username }}/edit" class="btn icon btn-warning"><i
+                            <a href="/dashboard/users/{{ $user->username }}/edit" class="btn btn-sm icon btn-warning"><i
                                     class="bi bi-pencil-square"></i></a>
                             <form action="/dashboard/users/{{ $user->username }}" class="d-inline" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger icon border-0"
+                                <button class="btn btn-sm btn-danger icon border-0"
                                     onclick="return confirm('Are you sure to delete post ?')"><i
                                         class="bi bi-trash"></i></button>
                             </form>

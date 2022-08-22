@@ -76,7 +76,7 @@ class MemberController extends Controller
     {
         return view('dashboard.members.show', [
             "member" => $member,
-            "active" => "Class Member / " . $member->fullName
+            "active" => "Class Member"
         ]);
     }
 
@@ -90,7 +90,7 @@ class MemberController extends Controller
     {
         return view('dashboard.members.edit', [
             "member" => $member,
-            "active" => "Edit Class Member / " . $member->fullName
+            "active" => "Edit Class Member"
         ]);
     }
 

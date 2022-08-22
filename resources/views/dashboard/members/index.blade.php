@@ -1,6 +1,10 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
+@php
+use App\Models\Member;
+@endphp
+
 @if (session()->has('success'))
 <div class="alert alert-success" role="alert">
     {{ session('success') }}
@@ -8,10 +12,13 @@
 @endif
 <div class="row justify-content-center">
     <div class="card col-lg-10">
-        <div class="table-responsive mt-3">
-            <div class="d-flex justify-content-end">
-                <a href="/dashboard/members/create" class="btn btn-primary icon mb-2"><i class="bi bi-plus-lg"></i></a>
-            </div>
+        <div class="d-flex justify-content-end justify-content-md-between align-items-center mt-3 mb-2">
+            <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Member::get()->count() }}
+                entries</p>
+            <a href="/dashboard/members/create" class="btn btn-primary icon mb-2">Add New Member <i
+                    class="bi bi-plus-lg"></i></a>
+        </div>
+        <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
@@ -30,14 +37,14 @@
                         <td>{{ $member->fullName }}</td>
                         <td>{{ $member->words }}</td>
                         <td class="text-center">
-                            <a href="/dashboard/members/{{ $member->nis }}" class="btn btn-info icon"><i
+                            <a href="/dashboard/members/{{ $member->nis }}" class="btn btn-sm btn-info icon"><i
                                     class="bi bi-eye"></i></a>
-                            <a href="/dashboard/members/{{ $member->nis }}/edit" class="btn icon btn-warning"><i
+                            <a href="/dashboard/members/{{ $member->nis }}/edit" class="btn btn-sm icon btn-warning"><i
                                     class="bi bi-pencil-square"></i></a>
                             <form action="/dashboard/members/{{ $member->nis }}" class="d-inline" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger icon border-0"
+                                <button class="btn btn-sm btn-danger icon border-0"
                                     onclick="return confirm('Are you sure to delete post ?')"><i
                                         class="bi bi-trash"></i></button>
                             </form>

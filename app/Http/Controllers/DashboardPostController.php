@@ -67,7 +67,8 @@ class DashboardPostController extends Controller
                 ]);
             }
         }
-        return redirect('/dashboard/posts')->with('success', 'New post has been added!');
+        toast('Success add New Post', 'success');
+        return redirect('/dashboard/posts');
     }
 
     /**
@@ -84,7 +85,7 @@ class DashboardPostController extends Controller
         return view('dashboard.posts.show', [
             'post' => $post,
             'images' => $post->images,
-            'active' => "My Post / " . $post->title
+            'active' => "My Post"
         ]);
     }
 
@@ -102,8 +103,9 @@ class DashboardPostController extends Controller
 
         return view('dashboard.posts.edit', [
             "post" => $post,
+            'images' => $post->images,
             "categories" => Category::all(),
-            "active" => "Edit Post / " . $post->title
+            "active" => "Edit Post"
         ]);
     }
 
@@ -142,7 +144,7 @@ class DashboardPostController extends Controller
         Post::where('id', $post->id)
             ->update($validatedData);
 
-        return redirect('/dashboard/posts')->with('success', 'New post has been updated!');
+        return redirect('/dashboard/posts');
     }
 
     /**
@@ -157,6 +159,7 @@ class DashboardPostController extends Controller
             Storage::delete($post->image);
         }
         Post::destroy($post->id);
-        return redirect('/dashboard/posts')->with('success', 'Post has been deleted!');
+        toast('Post has been deleted !', 'success');
+        return redirect('/dashboard/posts');
     }
 }

@@ -1,77 +1,86 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-    <style>
-        trix-toolbar .trix-button-group[data-trix-button-group="file-tools"] {
-            display: none;
-        }
-    </style>
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-body">
-                <form class="mb-5" id="postForm" action="/dashboard/posts" method="post" enctype="multipart/form-data">
+<form class="my-4" id="postForm" action="/dashboard/posts" method="post" enctype="multipart/form-data">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-body">
                     @csrf
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                             name="title" value="{{ old('title') }}" autofocus required>
                         @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3 d-none">
+                    <div class="mb-4 d-none">
                         <label for="slug" class="form-label">Slug</label>
                         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug"
                             name="slug" value="{{ old('slug') }}" required>
                         @error('slug')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="category" class="form-label">Category</label>
-                        <select class="form-select @error('category_id') is-invalid @enderror" name=" category_id" required>
+                        <select id="category" class="form-select @error('category_id') is-invalid @enderror"
+                            name=" category_id" required>
                             @foreach ($categories as $category)
-                                @if (old('category_id') == $category->id)
-                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                                @else
-                                    <option value="" hidden></option>
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endif
+                            @if (old('category_id') == $category->id)
+                            <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                            @else
+                            <option value="" hidden></option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endif
                             @endforeach
                         </select>
                         @error('category_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Image</label>
-                        <img class="img-preview img-fluid mb-3 col-sm-5">
-                        <input class="form-control  @error('image') is-invalid @enderror" name="image[]" accept="image/*"
-                            type="file" id="image" data-max-file-size="3MB" data-max-files="3" multiple>
-                        <p class="filepond--warning" id="warning" data-state="hidden">The maximum number of files is 3</p>
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="body" class="form-label">Body</label>
+                    <div class="mb-4">
+                        <label for="body" class="form-label">Caption</label>
                         <input id="body" type="hidden" name="body" value="{{ old('body') }}">
                         <trix-editor id="trix" input="body"></trix-editor>
                         @error('body')
-                            <p class="text-danger">{{ $message }}</p>
+                        <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                    <button type="button" class="btn btn-primary" id="uploadBtn" onclick="uploadImages()" disabled>Upload
-                        Post</button>
-                    <button type="submit" class="btn btn-primary" id="createBtn" hidden>Create
-                        Post</button>
-                </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Image</label>
+                        <img class="img-preview img-fluid mb-3 col-sm-5">
+                        <input class="form-control  @error('image') is-invalid @enderror" name="image[]"
+                            accept="image/*" type="file" id="image" data-max-file-size="3MB" data-max-files="3"
+                            multiple>
+                        <p class="filepond--warning" id="warning" data-state="hidden">The maximum number of files is 3
+                        </p>
+                        @error('image')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-primary float-end" id="uploadBtn" onclick="uploadImages()"
+                            disabled>Upload
+                            Post</button>
+                        <button type="submit" class="btn btn-primary" id="createBtn" hidden>Create
+                            Post</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</form>
 @section('scripts')
-    <script>
-        const title = document.querySelector("#title");
+<script>
+    const title = document.querySelector("#title");
         const slug = document.querySelector("#slug");
         title.addEventListener("keyup", function() {
             let preslug = title.value;
@@ -80,7 +89,12 @@
         });
 
         const inputElement = document.querySelector('input[id="image"]');
-        FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateSize);
+
+        FilePond.registerPlugin(FilePondPluginImagePreview,
+                                FilePondPluginFileValidateSize,
+                                FilePondPluginFileValidateType,
+                                FilePondPluginImageExifOrientation);
+
         const pond = FilePond.create(inputElement);
         FilePond.setOptions({
             required: true,
@@ -90,8 +104,15 @@
             allowReorder: true,
             allowProcess: false,
             checkValidity: true,
+            acceptedFileTypes: ['image/png','image/jpeg','image/jpg','image/webp','image/svg'],
             onprocessfiles: (files) => {
                 uploadPost()
+            },
+            onaddfilestart : (file) => {
+                uploadBtnState()
+            },
+            onremovefile : (error, file) => {
+                uploadBtnState()
             },
             server: {
                 url: '/upload',
@@ -100,6 +121,14 @@
                 }
             }
         })
+
+        function uploadBtnState(){
+            if($('#title,#body').val().length > 0 && pond.status != "0" && $('#category').val().length > 0 ){
+            $('#uploadBtn').prop('disabled', false);
+            }else{
+            $('#uploadBtn').prop('disabled', true);
+            }
+        }
 
         pond.on('warning', (error, file) => {
             if (error.body == "Max files") {
@@ -117,23 +146,14 @@
             }
         }
 
-        const body = document.querySelector("#body");
-        const form = document.querySelector("#postForm");
-        if (body.value.length > 0 && pond.status != "0") {
-            document.getElementById('uploadBtn').disabled = false;
-        }
-
-        window.addEventListener("keyup", function() {
-            if (body.value.length > 0 && pond.status != "0") {
-                document.getElementById('uploadBtn').disabled = false;
-            } else {
-                document.getElementById('uploadBtn').disabled = true;
-            }
-        })
+        $(document).keyup(function (e) { 
+            uploadBtnState();
+            console.log($("#category").val().length);
+        });
 
         function uploadPost() {
-            document.getElementById('createBtn').click();
+            $('#createBtn').click();
         }
-    </script>
+</script>
 @endsection
 @endsection

@@ -20,14 +20,14 @@
                         <td>{{ $post->title }}</td>
                         <td>{{ $post->category->name }}</td>
                         <td class="text-center">
-                            <a href="/dashboard/posts/{{ $post->slug }}" class="btn btn-info icon"><i
+                            <a href="/dashboard/posts/{{ $post->slug }}" class="btn btn-sm btn-info icon"><i
                                     class="bi bi-eye"></i></a>
-                            <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn icon btn-warning"><i
+                            <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-sm icon btn-warning"><i
                                     class="bi bi-pencil-square"></i></a>
                             <form action="/dashboard/posts/{{ $post->slug }}" class="d-inline" method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-danger icon border-0"
+                                <button class="btn btn-sm btn-danger icon border-0"
                                     onclick="return confirm('Are you sure to delete post ?')"><i
                                         class="bi bi-trash"></i></button>
                             </form>

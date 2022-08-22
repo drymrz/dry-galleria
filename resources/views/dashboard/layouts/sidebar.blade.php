@@ -4,13 +4,12 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="/dashboard"><img src="/adminview/assets/images/logo/logo.svg" alt="Logo"
-                            srcset=""></a>
+                    <a href="/dashboard"><img src="/adminview/assets/images/logo/logo.svg" alt="Logo" srcset=""></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
-                        height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                        aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                         <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path
@@ -72,31 +71,31 @@
                 </li>
 
                 @if (auth()->user()->isRole != '0')
-                    <li class="sidebar-item {{ Request::is('dashboard/members*') ? 'active' : '' }} ">
-                        <a href="/dashboard/members" class='sidebar-link'>
-                            <i class="bi bi-people-fill"></i>
-                            <span>Class Mate</span>
-                        </a>
-                    </li>
+                <li class="sidebar-item {{ Request::is('dashboard/members*') ? 'active' : '' }} ">
+                    <a href="/dashboard/members" class='sidebar-link'>
+                        <i class="bi bi-people-fill"></i>
+                        <span>Class Mate</span>
+                    </a>
+                </li>
                 @endif
                 @if (auth()->user()->isRole == '2')
-                    <li class="sidebar-item {{ Request::is('dashboard/su*') ? 'active' : '' }} has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-incognito"></i>
-                            <span>Super User</span>
-                        </a>
-                        <ul class="submenu active">
-                            <li class="submenu-item {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}">
-                                <a href="/dashboard/su/posts">All Post</a>
-                            </li>
-                            <li class="submenu-item {{ Request::is('dashboard/su/categories*') ? 'active' : '' }}">
-                                <a href="/dashboard">Categories</a>
-                            </li>
-                            <li class="submenu-item {{ Request::is('dashboard/su/users*') ? 'active' : '' }}">
-                                <a href="/dashboard/su/users">Registered User</a>
-                            </li>
-                        </ul>
-                    </li>
+                <li class="sidebar-item {{ Request::is('dashboard/su*') ? 'active' : '' }} has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-incognito"></i>
+                        <span>Super User</span>
+                    </a>
+                    <ul class="submenu active">
+                        <li class="submenu-item {{ Request::is('dashboard/su/posts*') ? 'active' : '' }}">
+                            <a href="/dashboard/su/posts">All Post</a>
+                        </li>
+                        <li class="submenu-item {{ Request::is('dashboard/su/categories*') ? 'active' : '' }}">
+                            <a href="/dashboard">Categories</a>
+                        </li>
+                        <li class="submenu-item {{ Request::is('dashboard/su/users*') ? 'active' : '' }}">
+                            <a href="/dashboard/su/users">Registered User</a>
+                        </li>
+                    </ul>
+                </li>
                 @endif
             </ul>
         </div>
