@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\PostImage;
 
 
 class UploadController extends Controller
@@ -20,8 +21,12 @@ class UploadController extends Controller
         return '';
     }
 
-    // public function destroy($url)
-    // {
-    //     Storage::delete($url);
-    // }
+    public function destroy($image)
+    {
+        $img = PostImage::find($image);
+        PostImage::destroy($img->id);
+        Storage::delete("/post-images/$img->image_name");
+        toast('Image has been deleted !', 'success');
+        return back();
+    }
 }

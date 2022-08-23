@@ -1,71 +1,13 @@
 @extends('dashboard.layouts.main')
 
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('container')
-{{-- <div class="col-lg-8">
-
-    <form class="mb-5" action="/dashboard/posts/{{ $post->slug }}" method="post" enctype="multipart/form-data">
-        @method('put')
-        @csrf
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                value="{{ old('title', $post->title) }}" autofocus>
-            @error('title')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
-                value="{{ old('slug', $post->slug) }}" required>
-            @error('slug')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="category" class="form-label">Category</label>
-            <select class="form-select @error('category_id') is-invalid @enderror" name=" category_id">
-                @foreach ($categories as $category)
-                @if (old('category_id', $post->category_id) == $category->id)
-                <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                @else
-                <option value="" hidden></option>
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endif
-                @endforeach
-            </select>
-            @error('category_id')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Image</label>
-            <input type="hidden" name="oldImage" value="{{ $post->image }}">
-            @if ($post->image)
-            <img src="{{ asset('storage/' . $post->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
-            @else
-            <img class="img-preview img-fluid mb-3 col-sm-5">
-            @endif
-            <input class="form-control  @error('image') is-invalid @enderror" name="image" type="file" id="image"
-                onchange="previewImage()">
-            @error('image')
-            <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="body" class="form-label">Body</label>
-            <input id="body" type="hidden" name="body" value="{{ old('body', $post->body) }}">
-            <trix-editor input="body"></trix-editor>
-            @error('body')
-            <p class="text-danger">{{ $message }}</p>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary">Update Post</button>
-    </form>
-</div> --}}
-
 <form class="my-4" id="postForm" action="/dashboard/posts/{{ $post->slug }}" method="post"
     enctype="multipart/form-data">
+    @method('put')
     <div class="row justify-content-center">
         <div class="col-lg-7">
             <div class="card">
@@ -115,43 +57,59 @@
             </div>
         </div>
         <div class="col-lg-5">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col" width="5%" class="text-center">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Category</th>
-                            <th scope="col" width="20%" class="text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($images as $i)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
             <div class="card">
-                <div class="card-body">
+                <p class="text-muted text-sm mb-0 mt-4 ms-4">Image {{ $images->count() }} of 6</p>
+                @if($images->isNotEmpty())
+                <div class="table-responsive mx-3">
+                    <table class="table">
+                        <tbody>
+                            @foreach ($images as $i)
+                            <tr>
+                                <td style="width:1px">
+                                    <button type="button" class="btn-preview-img"
+                                        style="background-image:url('/storage/post-images/{{ $i->image_name }}')"></button>
+                                </td>
+                                <td class="px-3 font-bold text-sm">
+                                    <div>{{ substr($i->image_name, 0, strpos($i->image_name,".")) }}</div>
+                                    <div>{{ substr((int)(Storage::size("/post-images/$i->image_name")) /1048576,0,5)}}
+                                        MB | .{{ \File::extension($i->image_name); }}
+                                    </div>
+                                </td>
+                                <td style="width:1px">
+                                    <form></form>
+                                    <form action="/dashboard/post/image/{{ $i->id }}" class="d-inline" method="post">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box" {{
+                                            $images->count() == "1" ? 'disabled' : '' }}><i
+                                                class="bi bi-trash"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+                <div class="card-body p-0 pb-4 px-3">
+                    @if ($images->count() != 6)
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Image</label>
                         <img class="img-preview img-fluid mb-3 col-sm-5">
                         <input class="form-control  @error('image') is-invalid @enderror" name="image[]"
-                            accept="image/*" type="file" id="image" data-max-file-size="3MB" data-max-files="3"
-                            multiple>
-                        <p class="filepond--warning" id="warning" data-state="hidden">The maximum number of files is 3
+                            accept="image/*" type="file" id="image" data-max-file-size="3MB"
+                            data-max-files="{{ 6 - $images->count() }}" multiple>
+                        <p class="filepond--warning" id="warning" data-state="hidden">The maximum number of files is {{
+                            6 - $images->count() }}
                         </p>
                         @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    @endif
                     <div class="mt-4">
-                        <button type="button" class="btn btn-primary float-end" id="uploadBtn" onclick="uploadImages()"
-                            disabled>Upload
-                            Post</button>
+                        <button type="button" class="btn btn-warning float-end mx-2" id="uploadBtn"
+                            onclick="uploadImages()">Save Changes</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-danger float-end">Discard</a>
                         <button type="submit" class="btn btn-primary" id="createBtn" hidden>Create
                             Post</button>
                     </div>
@@ -161,6 +119,7 @@
     </div>
 </form>
 
+@section('scripts')
 <script>
     const title = document.querySelector("#title");
         const slug = document.querySelector("#slug");
@@ -171,14 +130,81 @@
             slug.value = preslug.toLowerCase();
         });
 
-        function previewImage() {
-            const image = document.querySelector('#image');
-            const imgPreview = document.querySelector('.img-preview');
-
-            imgPreview.style.display = 'block';
-
-            const blob = URL.createObjectURL(image.files[0]);
-            imgPreview.src = blob;
+        const inputElement = document.querySelector('input[id="image"]');
+        
+        FilePond.registerPlugin(FilePondPluginImagePreview,
+                                FilePondPluginFileValidateSize,
+                                FilePondPluginFileValidateType,
+                                FilePondPluginImageExifOrientation);
+        
+        const pond = FilePond.create(inputElement);
+        FilePond.setOptions({
+            required: true,
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            instantUpload: false,
+            allowMultiple: true,
+            allowReorder: true,
+            allowProcess: false,
+            checkValidity: true,
+            acceptedFileTypes: ['image/png','image/jpeg','image/jpg','image/webp','image/svg'],
+            onprocessfiles: (files) => {
+                uploadPost()
+            },
+            onaddfilestart : (file) => {
+                uploadBtnState()
+            },
+            onremovefile : (error, file) => {
+                uploadBtnState()
+            },
+            server: {
+                url: '/upload',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            }
+        })
+        
+        function uploadBtnState(){
+            if($('#title,#body').val().length > 0 && $('#category').val().length > 0 ){
+                $('#uploadBtn').prop('disabled', false);
+            }else{
+                $('#uploadBtn').prop('disabled', true);
+            }
         }
+
+        $(document).keyup(function (e) {
+            uploadBtnState();
+        });
+
+        function uploadImages() {
+            pond.processFiles()
+            if(pond.status == "0" || pond.status == "4"){
+                uploadPost()
+            }
+        }
+
+        function uploadPost() {
+            $('#createBtn').click();
+        }
+
+        $('.show-alert-delete-box').click(function(event){
+            var form = $(this).closest("form");
+            event.preventDefault();
+            swal({
+                title: `Are you sure you want to delete this image?`,
+                text: "If you delete this, it will be gone forever.",
+                icon: "warning",
+                type: "warning",
+                buttons: ["Cancel","Yes!"],
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((willDelete) => {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+        });
 </script>
+@endsection
 @endsection

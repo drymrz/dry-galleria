@@ -45,3 +45,23 @@ trix-toolbar .trix-button-group[data-trix-button-group="file-tools"] {
 body.theme-dark trix-toolbar .trix-button-group {
     background-color: white;
 }
+
+.btn-preview-img {
+    display: block;
+    box-sizing: border-box;
+    border: 0 none;
+    padding: 0;
+    background-color: #f3f4f7;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    opacity: 0.75;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    outline: none;
+}

@@ -121,7 +121,6 @@ class DashboardPostController extends Controller
         $rules = [
             'title' => 'required|max:255',
             'category_id' => 'required',
-            'image' => 'image|file|max:10000',
             'body' => 'required'
         ];
 
@@ -130,19 +129,21 @@ class DashboardPostController extends Controller
         }
 
         $validatedData = $request->validate($rules);
-
-        if ($request->file('image')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
-            }
-            $validatedData['image'] = $request->file('image')->store('post-images');
-        }
-
-        $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
 
         Post::where('id', $post->id)
             ->update($validatedData);
+
+        if ($request->has('image')) {
+            foreach ($request->image as $image) {
+                $imageName = $request['slug'] . '-image-' . rand(1, 2000) . '.jpg';
+                Storage::move('/post-images/' . $image, '/post-images/' . $imageName);
+                PostImage::create([
+                    'post_id' => $post->id,
+                    'image_name' => $imageName
+                ]);
+            }
+        }
 
         return redirect('/dashboard/posts');
     }

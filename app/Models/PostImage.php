@@ -14,4 +14,9 @@ class PostImage extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
 }
