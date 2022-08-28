@@ -79,81 +79,41 @@
     </div>
 </form>
 @section('scripts')
+<script src="/adminview/js/posts.js"></script>
 <script>
-    const title = document.querySelector("#title");
-        const slug = document.querySelector("#slug");
-        title.addEventListener("keyup", function() {
-            let preslug = title.value;
-            preslug = preslug.replace(/ /g, "-");
-            slug.value = preslug.toLowerCase();
-        });
-
-        const inputElement = document.querySelector('input[id="image"]');
-
-        FilePond.registerPlugin(FilePondPluginImagePreview,
-                                FilePondPluginFileValidateSize,
-                                FilePondPluginFileValidateType,
-                                FilePondPluginImageExifOrientation);
-
-        const pond = FilePond.create(inputElement);
-        FilePond.setOptions({
-            required: true,
-            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-            instantUpload: false,
-            allowMultiple: true,
-            allowReorder: true,
-            allowProcess: false,
-            checkValidity: true,
-            acceptedFileTypes: ['image/png','image/jpeg','image/jpg','image/webp','image/svg'],
-            onprocessfiles: (files) => {
-                uploadPost()
+    FilePond.setOptions({
+        server: {
+            url: "/upload",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
             },
-            onaddfilestart : (file) => {
-                uploadBtnState()
-            },
-            onremovefile : (error, file) => {
-                uploadBtnState()
-            },
-            server: {
-                url: '/upload',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            }
-        })
+        },
+    })
 
-        function uploadBtnState(){
-            if($('#title,#body').val().length > 0 && pond.status != "0" && $('#category').val().length > 0 ){
+    function uploadBtnState(){
+        if($('#title,#body').val().length > 0 && pond.status != "0" && $('#category').val().length > 0 ){
             $('#uploadBtn').prop('disabled', false);
-            }else{
+        }else{
             $('#uploadBtn').prop('disabled', true);
-            }
         }
+    }
 
-        pond.on('warning', (error, file) => {
-            if (error.body == "Max files") {
-                document.getElementById('warning').setAttribute('data-state', 'visible');
-                setTimeout(() => {
-                    document.getElementById('warning').setAttribute('data-state', 'hidden');
-                }, 5000);
-            }
-        });
-
-        function uploadImages() {
-            pond.processFiles()
-            if (pond.status == "4") {
-                uploadPost();
-            }
+    pond.on('warning', (error, file) => {
+        if (error.body == "Max files") {
+            document.getElementById('warning').setAttribute('data-state', 'visible');
+            setTimeout(() => {
+                document.getElementById('warning').setAttribute('data-state', 'hidden');
+            }, 5000);
         }
+    });
 
-        $(document).keyup(function (e) { 
-            uploadBtnState();
-            console.log($("#category").val().length);
-        });
-
-        function uploadPost() {
-            $('#createBtn').click();
+    function uploadImages() {
+        pond.processFiles()
+        if (pond.status == "4") {
+            uploadPost();
         }
+    }
+
 </script>
 @endsection
 @endsection

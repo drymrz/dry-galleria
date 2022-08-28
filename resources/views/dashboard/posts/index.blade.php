@@ -6,6 +6,7 @@ use App\Models\Post;
 @endphp
 <div class="row justify-content-center">
     <div class="card col-lg-10">
+        @if($posts->isNotEmpty())
         <div class="d-flex justify-content-end justify-content-md-between align-items-center mt-3 mb-2">
             <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Post::where('user_id',
                 auth()->user()->id)->count() }}
@@ -49,6 +50,20 @@ use App\Models\Post;
                 {{ $posts->links() }}
             </div>
         </div>
+        @else
+        <div class="d-flex flex-column align-items-center justify-content-center p-5">
+            <div class="empty-image pt-4">
+                <img style="width: 200px" src="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+                    alt="empty">
+            </div>
+            <div class="empty-desc mt-3">
+                <p>There's no post found</p>
+            </div>
+            <div class="empty-act mt-3">
+                <a href="/dashboard/posts/create" class="btn btn-primary icon mb-2">Create Post</a>
+            </div>
+        </div>
+        @endif
     </div>
 </div>
 

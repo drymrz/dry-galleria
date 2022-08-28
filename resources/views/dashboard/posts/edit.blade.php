@@ -67,7 +67,9 @@ use Illuminate\Support\Facades\Storage;
                             <tr>
                                 <td style="width:1px">
                                     <button type="button" class="btn-preview-img"
-                                        style="background-image:url('/storage/post-images/{{ $i->image_name }}')"></button>
+                                        style="background-image:url('/storage/post-images/{{ $i->image_name }}')"
+                                        data-bs-toggle="modal" data-bs-target="#default"
+                                        data-image="{{ $i->image_name }}"></button>
                                 </td>
                                 <td class="px-3 font-bold text-sm">
                                     <div>{{ substr($i->image_name, 0, strpos($i->image_name,".")) }}</div>
@@ -119,92 +121,73 @@ use Illuminate\Support\Facades\Storage;
     </div>
 </form>
 
+<div class="modal fade modal-borderless" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel1">Image Preview</h5>
+                <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                <img class="modal-image img-fluid" src="" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
 @section('scripts')
+<script src="/adminview/js/posts.js"></script>
 <script>
-    const title = document.querySelector("#title");
-        const slug = document.querySelector("#slug");
-
-        title.addEventListener("keyup", function() {
-            let preslug = title.value;
-            preslug = preslug.replace(/ /g, "-");
-            slug.value = preslug.toLowerCase();
-        });
-
-        const inputElement = document.querySelector('input[id="image"]');
-        
-        FilePond.registerPlugin(FilePondPluginImagePreview,
-                                FilePondPluginFileValidateSize,
-                                FilePondPluginFileValidateType,
-                                FilePondPluginImageExifOrientation);
-        
-        const pond = FilePond.create(inputElement);
-        FilePond.setOptions({
-            required: true,
-            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
-            instantUpload: false,
-            allowMultiple: true,
-            allowReorder: true,
-            allowProcess: false,
-            checkValidity: true,
-            acceptedFileTypes: ['image/png','image/jpeg','image/jpg','image/webp','image/svg'],
-            onprocessfiles: (files) => {
-                uploadPost()
+    FilePond.setOptions({
+        server: {
+            url: "/upload",
+            headers: {
+                "X-CSRF-TOKEN": "{{ csrf_token() }}",
             },
-            onaddfilestart : (file) => {
-                uploadBtnState()
-            },
-            onremovefile : (error, file) => {
-                uploadBtnState()
-            },
-            server: {
-                url: '/upload',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            }
-        })
-        
-        function uploadBtnState(){
-            if($('#title,#body').val().length > 0 && $('#category').val().length > 0 ){
-                $('#uploadBtn').prop('disabled', false);
-            }else{
-                $('#uploadBtn').prop('disabled', true);
-            }
+        },
+    })
+    
+    function uploadBtnState(){
+        if($('#title,#body').val().length > 0 && $('#category').val().length > 0 ){
+            $('#uploadBtn').prop('disabled', false);
+        }else{
+            $('#uploadBtn').prop('disabled', true);
         }
+    }
 
-        $(document).keyup(function (e) {
-            uploadBtnState();
+    function uploadImages() {
+        pond.processFiles()
+        if(pond.status == "0" || pond.status == "4"){
+            uploadPost()
+        }
+    }
+
+    $('.show-alert-delete-box').click(function(event){
+        var form = $(this).closest("form");
+        event.preventDefault();
+        swal({
+            title: `Are you sure you want to delete this image?`,
+            text: "If you delete this, it will be gone forever.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Cancel","Yes!"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
         });
+    });
 
-        function uploadImages() {
-            pond.processFiles()
-            if(pond.status == "0" || pond.status == "4"){
-                uploadPost()
-            }
-        }
-
-        function uploadPost() {
-            $('#createBtn').click();
-        }
-
-        $('.show-alert-delete-box').click(function(event){
-            var form = $(this).closest("form");
-            event.preventDefault();
-            swal({
-                title: `Are you sure you want to delete this image?`,
-                text: "If you delete this, it will be gone forever.",
-                icon: "warning",
-                type: "warning",
-                buttons: ["Cancel","Yes!"],
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((willDelete) => {
-                if (willDelete) {
-                    form.submit();
-                }
-            });
-        });
+    $(".btn-preview-img").click(function (e) { 
+        var image = $(this).data("image");
+        $(".modal-image").attr("src","/storage/post-images/" + image)
+    });
 </script>
 @endsection
 @endsection
