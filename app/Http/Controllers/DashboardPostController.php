@@ -54,7 +54,7 @@ class DashboardPostController extends Controller
         ]);
 
         $validatedData['user_id'] = auth()->user()->id;
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 150);
         $newPost = Post::create($validatedData);
 
         if ($request->has('image')) {
@@ -129,7 +129,7 @@ class DashboardPostController extends Controller
         }
 
         $validatedData = $request->validate($rules);
-        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 100);
+        $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::where('id', $post->id)
             ->update($validatedData);

@@ -27,7 +27,7 @@
 <body>
 
     @include('frontview.partials.navbar')
-    <div class="{{ $active != 'posts' ? '' : 'container mt-5' }}">
+    <div class="{{ $active != 'posts' ? '' : 'container mt-5 pt-5 px-0' }}">
         <div class="{{ $active != 'posts'? '' : 'pt-5' }}">
             @yield('container')
         </div>

@@ -35,7 +35,8 @@ class PostController extends Controller
         return view('frontview.post', [
             "title" => 'Post',
             "active" => 'posts',
-            "post" => $post
+            "post" => $post,
+            "rec" => Post::whereNotIn('id', [$post->id])->inRandomOrder()->limit(5)->get()
         ]);
     }
 }

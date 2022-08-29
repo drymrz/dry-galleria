@@ -1,96 +1,118 @@
 @extends('frontview.layouts.main')
 
 @section('container')
-    <h2 class="mb-3 text-center">{{ $title }}</h2>
-    <div class="row mb-3 justify-content-center">
-        <div class="col-md-6">
-            <form action="/posts">
-                @if (request('category'))
-                    <input type="hidden" name="category" value="{{ request('category') }}">
-                @endif
-                @if (request('author'))
-                    <input type="hidden" name="author" value="{{ request('author') }}">
-                @endif
-                <div class="input-group mb-3">
-                    <input name="search" type="text" class="form-control" placeholder="Search.."
-                        value="{{ request('search') }}">
-                    <button class="btn btn-danger" type="submit">Search</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    @if ($posts->count())
-        <div class="card mb-3">
-            @if ($posts[0]->images->isNotEmpty())
-                <div class="d-flex align-items-center justify-content-center"
-                    style="max-height: 500px ; overflow:hidden; margin: auto;">
-                    <img class="img-fluid" src="{{ asset('storage/post-images/' . $posts[0]->images[0]->image_name) }}"
-                        class="card-img-top" alt="{{ $posts[0]->category->name }}">
-                </div>
-            @else
-                <img class="img-fluid" src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}"
-                    class="card-img-top" alt="{{ $posts[0]->category->name }}">
+{{-- <p class="fs-2 mb-3 text-center">{{ $title }}</p> --}}
+<div class="row mb-3 justify-content-center">
+    <div class="col-md-6">
+        <form action="/posts">
+            @if (request('category'))
+            <input type="hidden" name="category" value="{{ request('category') }}">
             @endif
-            <div class="card-body text-center">
-                <h3 class="card-title"><a class="text-decoration-none text-dark"
-                        href="/posts/{{ $posts[0]->slug }}">{{ $posts[0]->title }}</a></h3>
-                <p class="card-text"><small class="text-muted"> By. <a class="text-decoration-none"
-                            href="/posts?author={{ $posts[0]->user->username }}">{{ $posts[0]->user->name }}</a>
-                        in <a class="text-decoration-none"
-                            href="/posts?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a>
-                        {{ $posts[0]->created_at->diffForHumans() }}.</small>
-                </p>
-                <p class="card-text">{!! $posts[0]->excerpt !!}</p>
-                <a class="text-decoration-none btn btn-primary btn-sm" href="/posts/{{ $posts[0]->slug }}">Selengkapnya</a>
+            @if (request('author'))
+            <input type="hidden" name="author" value="{{ request('author') }}">
+            @endif
+            <div class="input-group mb-3">
+                <input name="search" type="text" class="form-control" placeholder="Search.."
+                    value="{{ request('search') }}">
+                <button class="btn btn-danger" type="submit">Search</button>
             </div>
-        </div>
-
-        <div class="container phone-wrap">
-            <div class="row">
-                @foreach ($posts->skip(1) as $post)
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <p class="position-absolute text-white px-3 py-2" style="background-color: rgba(0,0,0,0.7)"><a
-                                    href="/posts?category={{ $post->category->slug }}"
-                                    class="text-decoration-none text-white">
-                                    {{ $post->category->name }}</a></p>
-                            @if ($post->images->isNotEmpty())
-                                <div class="d-flex align-items-center justify-content-center posts-image"
-                                    style="overflow:hidden">
-                                    <img class="img-fluid"
-                                        src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}"
-                                        class="card-img-top" alt="{{ $post->category->name }}">
-                                </div>
-                            @else
-                                <div class="d-flex align-items-center justify-content-center posts-image"
-                                    style="overflow:hidden">
-                                    <img class="img-fluid"
-                                        src="https://source.unsplash.com/500x400?{{ $post->category->name }}"
-                                        class="card-img-top" alt="{{ $post->category->name }}">
-                                </div>
-                            @endif
-                            <div class="card-body d-flex flex-column justify-content-between posts-body">
-                                <h5 class="card-title"><a class="text-decoration-none text-dark"
-                                        href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h5>
-                                <p class="card-text"><small class="text-muted"> By. <a class="text-decoration-none"
-                                            href="/posts?author={{ $post->user->username }}">{{ $post->user->name }}
-                                        </a>
-                                        {{ $post->created_at->diffForHumans() }}.</small>
-                                </p>
-                                <p class="card-text text-truncate">{!! $post->excerpt !!}.</p>
-                                <a href="/posts/{{ $post->slug }}" class="btn btn-primary">Selengkapnya</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    @else
-        <p class="text-center fs-4">No post found.</p>
-    @endif
-    <div class="mb-5 mt-2 d-flex justify-content-center">
-
-        {{ $posts->links() }}
+        </form>
     </div>
+</div>
+
+@if ($posts->count())
+<div class="top-post d-flex flex-column flex-lg-row align-items-center py-5">
+    <div class="col-12 col-lg-7 pe-lg-4">
+        @if($posts[0]->images->isNotEmpty())
+        <a href="/posts/{{ $posts[0]->slug }}">
+            <div class="d-flex align-items-center justify-content-center"
+                style="max-height: 300px ; overflow:hidden; margin: auto; border-radius:10px">
+                <img class="img-fluid" src="{{ asset('storage/post-images/' . $posts[0]->images[0]->image_name) }}"
+                    alt="{{ $posts[0]->category->name }}">
+            </div>
+        </a>
+        @else
+        <a href="/posts/{{ $posts[0]->slug }}">
+            <div class="d-flex align-items-center justify-content-center"
+                style="max-height: 300px ; overflow:hidden; margin: auto; border-radius:10px">
+                <img class="img-fluid" src="https://source.unsplash.com/1200x600?{{ $posts[0]->category->name }}"
+                    alt="{{ $posts[0]->category->name }}">
+            </div>
+        </a>
+        @endif
+    </div>
+    <div class="d-flex flex-column col-12 col-lg-5 align-items-center align-items-sm-start justify-content-center">
+        <div class="text-center text-sm-start">
+            <p class="text-uppercase text-muted fw-bold pt-2 pt-lg-0" style="letter-spacing: 1.2px; font-size:17px">
+                Postingan
+                Teratas</p>
+            <a href="/posts/{{ $posts[0]->slug }}">
+                <p class="c-stisla-dark fs-4 fw-bold">{{ $posts[0]->title }}</p>
+            </a>
+            <p class="m-0">{!! $posts[0]->excerpt !!}</p>
+        </div>
+        <div class="author-container d-flex mt-3 flex-column flex-md-row align-items-center">
+            <div class="avatar-author">
+                <img src="/img/team/team-1.jpg" class="img-fluid" style="max-width:56px;border-radius:50px" alt="">
+            </div>
+            <div class="author-info d-flex align-items-md-start ps-md-4">
+                <a href="/posts?author={{ $posts[0]->user->username }}">
+                    <p class="c-stisla-dark fw-bold m-0">{{ $posts[0]->user->name }}</p>
+                </a>
+                <p class="m-0">{{ $posts[0]->created_at->diffForHumans() }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p class="my-5 fs-2 fw-bold text-center text-lg-start c-stisla-dark">Postingan Lainnya</p>
+
+<div class="row">
+    @foreach ($posts->skip(1) as $post)
+    <div class="col-md-4 d-flex flex-column mb-3">
+        @if ($post->images->isNotEmpty())
+        <div class="col-12">
+            <a href="/posts/{{ $posts[0]->slug }}">
+                <div class="d-flex align-items-center justify-content-center post-images"
+                    style="overflow:hidden; margin: auto;">
+                    <img class="img-fluid" style="border-radius:10px"
+                        src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}"
+                        alt="{{ $post->category->name }}">
+                </div>
+            </a>
+        </div>
+        @else
+        <div class="col-12">
+            <a href="/posts/{{ $posts[0]->slug }}">
+                <div class="d-flex align-items-center justify-content-center post-images"
+                    style="max-height: 15rem ; overflow:hidden; margin: auto;">
+                    <img class="img-fluid" style="border-radius:10px"
+                        src="https://source.unsplash.com/500x400?{{ $post->category->name }}"
+                        alt="{{ $post->category->name }}">
+                </div>
+            </a>
+        </div>
+        @endif
+        <div class="d-flex flex-column py-3">
+            <div class="d-flex justify-content-sm-between justify-content-center h-mb-1">
+                <p style="font-weight: 600" class="c-stisla-dark">{{ $post->created_at->format('d M') }} &#x2022; <a
+                        class="c-stisla-dark" href="/posts?category={{ $post->category->slug }}"> {{
+                        $post->category->name }} </a></p>
+            </div>
+            <a class=" c-stisla-dark fs-5 fw-bold text-center text-md-start" href="/posts/{{ $posts[0]->slug }}">
+                <p>{{ $post->title }}</p>
+            </a>
+            <p class="text-muted body-text text-center text-md-start">{!! $post->excerpt !!}</p>
+        </div>
+    </div>
+    @endforeach
+</div>
+
+@else
+<p class="text-center fs-4">No post found.</p>
+@endif
+<div class="mb-5 mt-2 d-flex justify-content-center">
+
+    {{ $posts->links() }}
+</div>
 @endsection

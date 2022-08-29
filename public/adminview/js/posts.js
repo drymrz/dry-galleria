@@ -17,7 +17,6 @@ FilePond.registerPlugin(
 
 const pond = FilePond.create(inputElement);
 FilePond.setOptions({
-    required: true,
     labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
     instantUpload: false,
     allowMultiple: true,

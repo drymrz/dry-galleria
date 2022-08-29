@@ -1,16 +1,99 @@
-@media screen and (min-width:1024px) {
-    .posts-image{
+@media screen and (min-width: 1024px) {
+    .posts-image {
         height: 250px;
     }
 
-    .posts-body{
+    .posts-body {
         height: 230px;
     }
 }
 
-@media screen and (max-width : 650px) {
-    .phone-wrap{
+@media screen and (max-width: 650px) {
+    .phone-wrap {
         width: 100% !important;
         padding: 0 !important;
+    }
+}
+
+p.post-heading,
+a.post-heading {
+    font-weight: 600 !important;
+    font-size: 14px;
+}
+
+.bg-stisla {
+    background-color: #6777ef !important;
+}
+
+.c-stisla {
+    color: #6777ef !important;
+}
+
+.c-stisla-dark {
+    color: #2f1c6a !important;
+}
+
+.author-info {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding: 5px 0 5px 0;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.author-avatar {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 96px;
+}
+
+.author-info .author {
+    font-size: 18px;
+    line-height: 19px;
+    letter-spacing: 1.2px;
+}
+
+.author-info .author-name {
+    font-size: 44px;
+    line-height: 55px;
+}
+
+.author-description p {
+    text-align: justify;
+}
+
+.post-images {
+    max-height: 15rem !important;
+}
+
+@media screen and (max-width: 650px) {
+    .author-info {
+        padding-top: 15px;
+    }
+    article,
+    .body-text {
+        font-weight: 300;
+    }
+
+    .badge,
+    p.post-heading,
+    a.post-heading {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .post-images {
+        height: 10rem !important;
     }
 }

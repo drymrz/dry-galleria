@@ -58,7 +58,7 @@
                         <label for="formFile" class="form-label">Image</label>
                         <img class="img-preview img-fluid mb-3 col-sm-5">
                         <input class="form-control  @error('image') is-invalid @enderror" name="image[]"
-                            accept="image/*" type="file" id="image" data-max-file-size="3MB" data-max-files="6"
+                            accept="image/*" type="file" id="image" data-max-file-size="5MB" data-max-files="6"
                             multiple>
                         <p class="filepond--warning" id="warning" data-state="hidden">The maximum number of files is 6
                         </p>
@@ -82,6 +82,7 @@
 <script src="/adminview/js/posts.js"></script>
 <script>
     FilePond.setOptions({
+        required: true,
         server: {
             url: "/upload",
             headers: {
