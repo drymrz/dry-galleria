@@ -1,7 +1,7 @@
 @extends('frontview.layouts.main')
 
 @section('container')
-{{-- <p class="fs-2 mb-3 text-center">{{ $title }}</p> --}}
+<p class="fs-2 fw-bold c-stisla-dark mb-4 text-center">{{ $title }}</p>
 <div class="row mb-3 justify-content-center">
     <div class="col-md-6">
         <form action="/posts">
@@ -11,10 +11,11 @@
             @if (request('author'))
             <input type="hidden" name="author" value="{{ request('author') }}">
             @endif
-            <div class="input-group mb-3">
-                <input name="search" type="text" class="form-control" placeholder="Search.."
-                    value="{{ request('search') }}">
-                <button class="btn btn-danger" type="submit">Search</button>
+            <div class="input-group mb-3" style="height: 50px">
+                <input name="search" type="text" class="form-control me-3 me-sm-4 px-4" placeholder="Cari Postingan"
+                    value="{{ request('search') }}" style="border-radius: 50px">
+                <button class="btn btn-danger" type="submit" style="border-radius: 50px; width:60px"><i
+                        class="bi bi-search"></i></button>
             </div>
         </form>
     </div>
@@ -65,6 +66,8 @@
     </div>
 </div>
 
+@if ($posts->count() >1)
+
 <p class="my-5 fs-2 fw-bold text-center text-lg-start c-stisla-dark">Postingan Lainnya</p>
 
 <div class="row">
@@ -107,7 +110,7 @@
     </div>
     @endforeach
 </div>
-
+@endif
 @else
 <p class="text-center fs-4">No post found.</p>
 @endif

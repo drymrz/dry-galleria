@@ -85,7 +85,7 @@ class DashboardPostController extends Controller
         return view('dashboard.posts.show', [
             'post' => $post,
             'images' => $post->images,
-            'active' => "My Post"
+            'active' => "Post Overview"
         ]);
     }
 

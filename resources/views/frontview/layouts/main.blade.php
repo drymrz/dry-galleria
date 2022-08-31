@@ -15,6 +15,7 @@
     {{-- icons --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link href="/frontview/vendor/boxicons-2.1.2/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <title>Halaman {{ $title }} | RPL Blog </title>
     <style>
@@ -34,6 +35,11 @@
     </div>
 
     <script src="/frontview/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(".nav-link").click(function (e) { 
+            $("#m-navbtn").click()
+        });
+    </script>
 </body>
 
 </html>

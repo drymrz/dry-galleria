@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/adminview/assets/css/main/app.css">
     <link rel="stylesheet" href="/adminview/assets/css/main/app-dark.css">
     <link rel="stylesheet" href="/adminview/css/custom.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet">
 
     {{-- Icon --}}
     <link rel="shortcut icon" href="/adminview/assets/images/logo/favicon.svg" type="image/x-icon">
@@ -24,6 +26,11 @@
 
     {{-- Trix Editor --}}
     <link rel="stylesheet" type="text/css" href="/adminview/css/trix.css">
+    <style>
+        * {
+            font-family: 'Nunito' !important
+        }
+    </style>
 </head>
 
 <body>
