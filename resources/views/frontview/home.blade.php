@@ -89,7 +89,7 @@
                     data-aos-delay="300">
                     <div class="icon-box">
                         @if ($member->image)
-                        <img src="{{ asset('storage/' . $member->image) }}" alt="" />
+                        <img src="{{ asset('storage/member-photos/' . $member->image) }}" alt="" />
                         @else
                         <img src="{{ url('img/team/team-1.jpg') }}" alt="" />
                         @endif

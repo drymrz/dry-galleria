@@ -80,5 +80,7 @@ Route::get('/dashboard/su/posts', function () {
 Route::resource('/dashboard/members', MemberController::class)->middleware('auth');
 Route::resource('/dashboard/su/users', UserController::class)->middleware('auth');
 
-Route::post('/upload', [UploadController::class, 'store']);
-Route::delete('/dashboard/post/image/{id}', [UploadController::class, 'destroy'])->name('post.image.destroy');
+Route::post('/uploadpi', [UploadController::class, 'storepi']);
+Route::delete('/dashboard/post/image/{id}', [UploadController::class, 'destroypi'])->name('post.image.destroypi');
+
+Route::post('/uploadmi', [UploadController::class, 'storemi']);

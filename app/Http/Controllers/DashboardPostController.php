@@ -144,7 +144,7 @@ class DashboardPostController extends Controller
                 ]);
             }
         }
-
+        toast('Post has been changed', 'success');
         return redirect('/dashboard/posts');
     }
 

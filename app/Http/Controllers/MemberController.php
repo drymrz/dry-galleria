@@ -47,11 +47,12 @@ class MemberController extends Controller
             'nis' => 'required|unique:members',
             'fullName' => 'required|max:255',
             'words' => 'required',
-            'image' => 'image|file|max:1024',
         ]);
 
-        if ($request->file('image')) {
-            $validatedData['image'] = $request->file('image')->store('member-photos');
+        if ($request->has('image')) {
+            $imageName = $validatedData['nis'] . '-image-' . rand(1, 2000) . '.jpg';
+            Storage::move('/member-photos/' . $request->image, '/member-photos/' . $imageName);
+            $validatedData['image'] = $imageName;
         }
 
         $validatedData['createdBy'] = auth()->user()->id;
@@ -74,6 +75,7 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
+        abort(404);
         return view('dashboard.members.show', [
             "member" => $member,
             "active" => "Class Member"
@@ -106,7 +108,6 @@ class MemberController extends Controller
         $rules = [
             'fullName' => 'required|max:255',
             'words' => 'required',
-            'image' => 'image|file|max:1024',
         ];
 
         if ($request->nis != $member->nis) {
@@ -116,11 +117,13 @@ class MemberController extends Controller
         $validatedData = $request->validate($rules);
 
 
-        if ($request->file('image')) {
+        if ($request->has('image')) {
             if ($request->oldImage) {
-                Storage::delete($request->oldImage);
+                Storage::delete("/member-photos/" . $request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('post-images');
+            $imageName = $request['nis'] . '-image-' . rand(1, 2000) . '.jpg';
+            Storage::move('/member-photos/' . $request->image, '/member-photos/' . $imageName);
+            $validatedData['image'] = $imageName;
         }
 
         $validatedData['lastEdit'] = auth()->user()->id;
@@ -141,6 +144,9 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
+        if ($member->image) {
+            Storage::delete('/member-photos/' . $member->image);
+        }
         Member::destroy($member->id);
         return redirect('/dashboard/members')->with('success', 'Member has been deleted!');
     }

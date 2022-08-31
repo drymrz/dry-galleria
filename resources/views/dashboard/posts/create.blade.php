@@ -3,12 +3,12 @@
 @section('container')
 <form class="my-4" id="postForm" action="/dashboard/posts" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center">
-        <div class="col-lg-7">
+        <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
                     @csrf
                     <div class="mb-4">
-                        <label for="title" class="form-label">Title</label>
+                        <label for="title" class="form-label fw-bold">Judul</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title"
                             name="title" value="{{ old('title') }}" autofocus required>
                         @error('title')
@@ -24,7 +24,7 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="category" class="form-label">Category</label>
+                        <label for="category" class="form-label fw-bold">Kategori</label>
                         <select id="category" class="form-select @error('category_id') is-invalid @enderror"
                             name=" category_id" required>
                             @foreach ($categories as $category)
@@ -41,7 +41,7 @@
                         @enderror
                     </div>
                     <div class="mb-4">
-                        <label for="body" class="form-label">Caption</label>
+                        <label for="body" class="form-label fw-bold">Caption</label>
                         <input id="body" type="hidden" name="body" value="{{ old('body') }}">
                         <trix-editor id="trix" input="body"></trix-editor>
                         @error('body')
@@ -55,7 +55,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Image</label>
+                        <label for="formFile" class="form-label fw-bold">Photo / Gambar</label>
                         <img class="img-preview img-fluid mb-3 col-sm-5">
                         <input class="form-control  @error('image') is-invalid @enderror" name="image[]"
                             accept="image/*" type="file" id="image" data-max-file-size="5MB" data-max-files="6"
@@ -84,7 +84,7 @@
     FilePond.setOptions({
         required: true,
         server: {
-            url: "/upload",
+            url: "/uploadpi",
             headers: {
                 "X-CSRF-TOKEN": "{{ csrf_token() }}",
             },

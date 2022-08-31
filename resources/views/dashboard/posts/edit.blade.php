@@ -143,7 +143,7 @@ use Illuminate\Support\Facades\Storage;
 <script>
     FilePond.setOptions({
         server: {
-            url: "/upload",
+            url: "/uploadpi",
             headers: {
                 "X-CSRF-TOKEN": "{{ csrf_token() }}",
             },
