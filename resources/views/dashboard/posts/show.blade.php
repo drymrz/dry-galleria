@@ -14,9 +14,9 @@
                 </div>
                 <p class="post-heading m-0 me-3 me-lg-4 pt-1 c-stisla-dark">{{ $post->created_at->format('M d, Y') }}
                 </p>
-                <a href="/posts?author={{ $post->user->username }}" class="post-heading pt-1 c-stisla-dark">{{
-                    $post->user->name
-                    }}</a>
+                <a href='{{ $post->user == null ? "#" : "/posts?author=" . $post->user->username}}'
+                    class="post-heading pt-1 c-stisla-dark">{{ $post->user == null ? "Deleted User" :
+                    $post->user->name }}</a>
             </div>
             <div class="post-title mt-2">
                 <h1 class="fs-1 fw-bold c-stisla-dark">{{ $post->title }}</h1>
@@ -46,6 +46,7 @@
                 {!! $post->body !!}
             </article>
         </div>
+        @if ($post->user != null)
         <div class="post-author"
             style="background-color: #FAFBFF; border-radius:20px; padding:50px; font-family:'Poppins'">
             <div class="d-flex flex-column flex-sm-row ms-0 justify-content-center justify-content-sm-start">
@@ -72,6 +73,7 @@
                     $post->user->name }}</a>
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

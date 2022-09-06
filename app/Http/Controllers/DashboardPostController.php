@@ -165,6 +165,6 @@ class DashboardPostController extends Controller
         }
         Post::destroy($post->id);
         toast('Post has been deleted !', 'success');
-        return redirect('/dashboard/posts');
+        return back();
     }
 }

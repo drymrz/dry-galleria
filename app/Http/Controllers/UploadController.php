@@ -39,4 +39,14 @@ class UploadController extends Controller
         }
         return '';
     }
+
+    public function storepp(Request $request)
+    {
+        if ($request->has('image')) {
+            $imageName = $request->file('image')->getClientOriginalName();
+            $request->file('image')->move('storage/profile-photos/', $imageName);
+            return $imageName;
+        }
+        return '';
+    }
 }

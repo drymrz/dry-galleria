@@ -70,7 +70,7 @@
                                 $name = explode(' ', $fullname);
                                 @endphp
                                 <h6 class="mb-0 text-gray-600 text-truncate">
-                                    {{ $name[0] }} {{ $name[1] ? $name[1] : '' }}</h6>
+                                    {{ $name[0] }} {{ count($name) > 1 ? $name[1] : '' }}</h6>
                                 <p class="mb-0 text-sm text-gray-600">Administrator</p>
                             </div>
                             <div class="user-img d-flex align-items-center">

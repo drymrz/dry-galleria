@@ -65,3 +65,19 @@ body.theme-dark trix-toolbar .trix-button-group {
     overflow: hidden;
     outline: none;
 }
+.sidebar-wrapper {
+    z-index: 1000;
+}
+
+.icon-inside {
+    position: relative;
+    top: -1.65px;
+    padding-left: 5px;
+}
+
+@media screen and (max-width: 650px) {
+    .dropdown-menu-end.show {
+        right: 0;
+        left: -100px;
+    }
+}

@@ -116,7 +116,9 @@ a.post-heading {
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {
-    transform: scale(0.85) translateY(-1.65rem) translateX(0.15rem);
+    padding: 0 10px;
+    height: fit-content;
+    transform: scale(0.85) translateY(-0.85rem) translateX(0.15rem);
     background-color: #fff;
     opacity: 1;
 }

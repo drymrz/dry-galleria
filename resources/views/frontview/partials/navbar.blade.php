@@ -49,7 +49,7 @@
       border-radius: 0px 0px 10px 10px;
     ">
     <div class="container py-3">
-        <a class="navbar-brand d-flex align-items-center fw-semi-bold fs-3" href="index.html">
+        <a class="navbar-brand d-flex align-items-center fw-semi-bold fs-3" href="../">
             <img class="me-3" src="{{ url('img/logo.png') }}" height="50" /></a>
         <button id="m-navbtn" class="navbar-toggler mx-2 m-navbtn border-0" type="button" data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"

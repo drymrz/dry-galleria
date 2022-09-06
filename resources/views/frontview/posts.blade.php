@@ -57,8 +57,9 @@
                 <img src="/img/team/team-1.jpg" class="img-fluid" style="max-width:56px;border-radius:50px" alt="">
             </div>
             <div class="author-info d-flex align-items-md-start ps-md-4">
-                <a href="/posts?author={{ $posts[0]->user->username }}">
-                    <p class="c-stisla-dark fw-bold m-0">{{ $posts[0]->user->name }}</p>
+                <a href='{{ $posts[0]->user == null ? "#" : "/posts?author=" . $posts[0]->user->username}}'>
+                    <p class="c-stisla-dark fw-bold m-0">{{ $posts[0]->user == null ? "Deleted User" :
+                        $posts[0]->user->name }}</p>
                 </a>
                 <p class="m-0">{{ $posts[0]->created_at->diffForHumans() }}</p>
             </div>
@@ -75,7 +76,7 @@
     <div class="col-md-4 d-flex flex-column mb-3">
         @if ($post->images->isNotEmpty())
         <div class="col-12">
-            <a href="/posts/{{ $posts[0]->slug }}">
+            <a href="/posts/{{ $post->slug }}">
                 <div class="d-flex align-items-center justify-content-center post-images"
                     style="overflow:hidden; margin: auto;">
                     <img class="img-fluid" style="border-radius:10px"
@@ -86,7 +87,7 @@
         </div>
         @else
         <div class="col-12">
-            <a href="/posts/{{ $posts[0]->slug }}">
+            <a href="/posts/{{ $post->slug }}">
                 <div class="d-flex align-items-center justify-content-center post-images"
                     style="max-height: 15rem ; overflow:hidden; margin: auto;">
                     <img class="img-fluid" style="border-radius:10px"
@@ -102,7 +103,7 @@
                         class="c-stisla-dark" href="/posts?category={{ $post->category->slug }}"> {{
                         $post->category->name }} </a></p>
             </div>
-            <a class=" c-stisla-dark fs-5 fw-bold text-center text-md-start" href="/posts/{{ $posts[0]->slug }}">
+            <a class=" c-stisla-dark fs-5 fw-bold text-center text-md-start" href="/posts/{{ $post->slug }}">
                 <p>{{ $post->title }}</p>
             </a>
             <p class="text-muted body-text text-center text-md-start">{!! $post->excerpt !!}</p>

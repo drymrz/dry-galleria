@@ -11,8 +11,8 @@ use App\Models\Post;
             <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Post::where('user_id',
                 auth()->user()->id)->count() }}
                 entries</p>
-            <a href="/dashboard/posts/create" class="btn btn-primary icon mb-2">Add New Post <i
-                    class="bi bi-plus-lg"></i></a>
+            <a href="/dashboard/posts/create" class="btn btn-primary icon mb-2">Add Post <i
+                    class="bi bi-plus-lg icon-inside"></i></a>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">

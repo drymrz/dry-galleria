@@ -5,9 +5,10 @@
     <div class="row vh-100 pt-5 align-content-center justify-content-center">
         <div class="col-lg-4">
             <main class="form-registration">
-                <p class="h4 mb-5 text-center" style="font-weight: 600">Registration</p>
+                <p class="h4 mb-3 text-center" style="font-weight: 600">Registration</p>
                 <form action="/register" method="post">
                     @csrf
+                    <hr class="mb-4">
                     <div class="form-floating mb-4">
                         <input type="text" name="name"
                             class="form-control rounded-top @error('name') is-invalid @enderror" id="name"

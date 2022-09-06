@@ -63,8 +63,8 @@ class MemberController extends Controller
 
 
         Member::create($validatedData);
-
-        return redirect('/dashboard/members')->with('success', 'New Member has been added!');
+        toast('Success add New Member', 'success');
+        return redirect('/dashboard/members');
     }
 
     /**
@@ -133,7 +133,8 @@ class MemberController extends Controller
 
         Member::where('id', $member->id)->update($validatedData);
 
-        return redirect('/dashboard/members')->with('success', 'Member has been updated!');
+        toast('Member has been updated', 'success');
+        return redirect('/dashboard/members');
     }
 
     /**
@@ -148,6 +149,7 @@ class MemberController extends Controller
             Storage::delete('/member-photos/' . $member->image);
         }
         Member::destroy($member->id);
-        return redirect('/dashboard/members')->with('success', 'Member has been deleted!');
+        toast('Member has been deleted', 'success');
+        return redirect('/dashboard/members');
     }
 }

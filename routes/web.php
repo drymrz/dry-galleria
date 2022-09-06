@@ -84,3 +84,4 @@ Route::post('/uploadpi', [UploadController::class, 'storepi']);
 Route::delete('/dashboard/post/image/{id}', [UploadController::class, 'destroypi'])->name('post.image.destroypi');
 
 Route::post('/uploadmi', [UploadController::class, 'storemi']);
+Route::post('/uploadpp', [UploadController::class, 'storepp']);

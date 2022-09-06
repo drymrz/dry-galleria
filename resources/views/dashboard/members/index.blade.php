@@ -12,7 +12,7 @@ use App\Models\Member;
             <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Member::get()->count() }}
                 entries</p>
             <a href="/dashboard/members/create" class="btn btn-primary icon mb-2">Add Member <i
-                    class="bi bi-plus-lg"></i></a>
+                    class="bi bi-plus-lg icon-inside"></i></a>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">

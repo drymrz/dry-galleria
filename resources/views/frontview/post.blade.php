@@ -13,16 +13,16 @@
                 </div>
                 <p class="post-heading m-0 me-3 me-lg-4 pt-1 c-stisla-dark">{{ $post->created_at->format('M d, Y') }}
                 </p>
-                <a href="/posts?author={{ $post->user->username }}" class="post-heading pt-1 c-stisla-dark">{{
-                    $post->user->name
-                    }}</a>
+                <a href='{{ $post->user == null ? "#" : "/posts?author=" . $post->user->username}}'
+                    class="post-heading pt-1 c-stisla-dark">{{ $post->user == null ? "Deleted User" :
+                    $post->user->name }}</a>
             </div>
             <div class="post-title mt-2">
                 <h1 class="fs-1 fw-bold c-stisla-dark">{{ $post->title }}</h1>
             </div>
 
             @if ($post->images->isNotEmpty())
-            <div>
+            <div class="align-items-center d-flex justify-content-center">
                 <img class="img-fluid mt-3" style="border-radius: 10px"
                     src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}" class="card-img-top"
                     alt="{{ $post->category->name }}">
@@ -30,7 +30,7 @@
 
             @if(count($post->images) > 1)
             @foreach ($post->images->skip(1) as $i)
-            <div>
+            <div class="align-items-center d-flex justify-content-center">
                 <img class="img-fluid mt-3" src="{{ asset('storage/post-images/' . $i->image_name) }}"
                     style="border-radius: 10px" alt="{{ $post->category->name }}">
             </div>
@@ -45,6 +45,7 @@
                 {!! $post->body !!}
             </article>
         </div>
+        @if ($post->user != null)
         <div class="post-author"
             style="background-color: #FAFBFF; border-radius:20px; padding:50px; font-family:'Poppins'">
             <div class="d-flex flex-column flex-sm-row ms-0 justify-content-center justify-content-sm-start">
@@ -71,6 +72,7 @@
                     $post->user->name }}</a>
             </div>
         </div>
+        @endif
     </div>
     <div class="post-recommendation col-10 mt-3 pt-5">
         <p class="fs-2 fw-bolder c-stisla-dark pb-2 text-center text-sm-start">Rekomendasi Postingan</p>
@@ -90,7 +92,7 @@
                     <p class="pe-3">{{ $r->created_at->format('M d, Y') }}</p>
                     <div class="d-flex">
                         <span class="dot pe-1">&#x2022;</span>
-                        <p>Oleh {{ $r->user->name }}</p>
+                        <p>Oleh {{ $r->user == null ? "Deleted User" : $r->user->name }}</p>
                     </div>
                 </div>
             </a>
