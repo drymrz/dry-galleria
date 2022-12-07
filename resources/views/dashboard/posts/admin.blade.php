@@ -19,7 +19,7 @@
                     <tr>
                         <td class="text-center">{{ $posts->firstItem()+$loop->iteration -1 }}</td>
                         <td>{{ $post->title }}</td>
-                        <td>{{ $post->category->name }}</td>
+                        <td>{{ $post->category == null ? "Deleted Category" : $post->category->name }}</td>
                         <td>{{ $post->user == null ? "Deleted User" : $post->user->name }}</td>
                         <td class="text-center">
                             <a href="/dashboard/posts/{{ $post->slug }}" class="btn btn-sm btn-info icon"><i

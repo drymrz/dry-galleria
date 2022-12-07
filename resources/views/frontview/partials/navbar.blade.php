@@ -1,88 +1,80 @@
-<header id="header" class="fixed-top">
-    <div class="container d-flex align-items-center justify-content-between">
-        <a href="../" class="logo"><img src="{{ url('img/logo.png') }}" alt="" class="img-fluid" /></a>
+@php
+use App\Models\Category;
+@endphp
 
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li>
-                    <a class="nav-link scrollto" href="{{ $active === 'home' ? '#hero' : '../' }}">Beranda</a>
-                </li>
-                <li><a class="nav-link scrollto" href="../#about">Tentang</a></li>
-                <li><a class="nav-link scrollto" href="../#team">Anggota Kelas</a></li>
-                <li>
-                    <a class="nav-link scrollto  {{ $active === 'posts' ? 'active' : '' }}" href="/posts">Postingan</a>
-                </li>
-                @auth
-                <li class="dropdown"><a style="cursor: pointer"><span>Halo , {{ auth()->user()->name }}</span> <i
-                            class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a href="/dashboard">Dashboard</a>
-                        </li>
-                        <li>
-                            <form action="/logout" method="post">
-                                @csrf
-                                <button type="submit" class="dropdown-item" style="padding-left:0">
-                                    <a>
-                                        Logout
-                                    </a>
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-                @else
-                <li>
-                    <a class="getstarted scrollto" href="/login">Login</a>
-                </li>
-                @endauth
+<header class="header-default">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-xl">
+            <a class="navbar-brand" style="max-width: 90px" href="/"><img src="{{ url('img/logo.png') }}"
+                    alt="logo"></a>
 
-            </ul>
-        </nav>
-        <!-- .navbar -->
-    </div>
-</header>
+            <div class="collapse navbar-collapse">
+                <!-- menus -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item {{ $active === 'posts' ? 'active' : '' }}">
+                        <a class="nav-link" href="/">Beranda</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="##">Kategori Postingan</a>
+                        <ul class="dropdown-menu">
+                            @foreach(Category::limit(4)->get() as $category)
+                            <li><a class="dropdown-item" href="/posts?category={{ $category->slug }}">{{
+                                    $category->name }}</a></li>
+                            @endforeach
+                            <li><a href="/categories" class="dropdown-item">Lihat Semua Kategori</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://adrymirza.xyz" target="_blank">Tentang Saya</a>
+                    </li>
+                    @auth
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="##">Halo, {{ auth()->user()->name }}</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                            <li>
+                                <form action="/logout" method="post">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">
+                                        <a>
+                                            Logout
+                                        </a>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @else
+                    <li class="nav-item {{ $active === 'login' ? 'active' : '' }}">
+                        <a class="nav-link " href="/login">Login</a>
+                    </li>
+                    @endauth
+                </ul>
+            </div>
 
-<nav id="m-nav" class="navbar navbar-expand-lg navbar-light fixed-top shadow-transition"
-    data-navbar-on-scroll="data-navbar-on-scroll" style="
-      background-image: none;
-      transition: background-color 0.35s ease 0s;
-      border-radius: 0px 0px 10px 10px;
-    ">
-    <div class="container py-3">
-        <a class="navbar-brand d-flex align-items-center fw-semi-bold fs-3" href="../">
-            <img class="me-3" src="{{ url('img/logo.png') }}" height="50" /></a>
-        <button id="m-navbtn" class="navbar-toggler mx-2 m-navbtn border-0" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse border-top border-lg-0 mt-4 mt-lg-0 collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto pt-2 pt-lg-0 font-base">
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link fw-medium" aria-current="page"
-                        href="{{ $active === 'home' ? '#hero' : '../' }}">Beranda</a>
-                </li>
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link" href="../#about">Tentang</a>
-                </li>
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link" href="../#team">Anggota Kelas</a>
-                </li>
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link" href="/posts">Postingan </a>
-                </li>
-                @auth
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link scrollto active" href="/dashboard">Dashboard</a>
-
-                </li>
-                @else
-                <li class="nav-item px-2 scrollto" data-anchor="data-anchor">
-                    <a class="nav-link scrollto active" href="/login">Login</a>
-
-                </li>
-                @endauth
-            </ul>
+            <!-- header right section -->
+            <div class="header-right">
+                <!-- social icons -->
+                <ul class="social-icons list-unstyled list-inline mb-0">
+                    <li class="list-inline-item"><a href="https://www.instagram.com/adry_mirza/" target="_blank"><i
+                                class="fab fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.github.com/drymrz" target="_blank"><i
+                                class="fab fa-github"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.linkedin.com/in/adry-mirza-b57169248/"
+                            target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                    <li class="list-inline-item"><a href="https://www.youtube.com/channel/UCtnIpuit5ApnEy3QI9by3xg"
+                            target="_blank"><i class="fab fa-youtube"></i></a></li>
+                </ul>
+                <!-- header buttons -->
+                <div class="header-buttons">
+                    <button class="search icon-button">
+                        <i class="icon-magnifier"></i>
+                    </button>
+                    <button class="burger-menu icon-button d-lg-none">
+                        <span class="burger-icon"></span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>

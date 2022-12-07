@@ -2,16 +2,17 @@
 
 @section('container')
 @php
-use App\Models\Post;
+use App\Models\Category;
 @endphp
+
 <div class="row justify-content-center">
     <div class="card col-lg-10">
-        @if($posts->isNotEmpty())
+        @if($categories->isNotEmpty())
         <div class="d-flex justify-content-end justify-content-md-between align-items-center mt-3 mb-2">
-            <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Post::where('user_id',
-                auth()->user()->id)->count() }}
+            <p class="d-none d-md-inline-block text-muted text-sm mb-0 ms-1">Showing total {{ Category::get()->count()
+                }}
                 entries</p>
-            <a href="/dashboard/posts/create" class="btn btn-primary icon mb-2">Add Post <i
+            <a href="/dashboard/su/categories/create" class="btn btn-primary icon mb-2">Add Category <i
                     class="bi bi-plus-lg icon-inside"></i></a>
         </div>
         <div class="table-responsive">
@@ -19,27 +20,31 @@ use App\Models\Post;
                 <thead>
                     <tr>
                         <th scope="col" width="5%" class="text-center">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Nama Category</th>
+                        <th scope="col" width="25%">Waktu Dibuat</th>
+                        <th scope="col" width="15%">Total Postingan</th>
                         <th scope="col" width="20%" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($posts as $post)
+                    @foreach ($categories as $category)
                     <tr>
-                        <td class="text-center">{{ $posts->firstItem() + $loop->iteration -1 }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->category == null ? "Deleted Category" : $post->category->name }}</td>
+                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->created_at->format("H:i:s, d M Y") }}</td>
+                        <td>{{ count($category->posts) }}</td>
                         <td class="text-center">
-                            <a href="/dashboard/posts/{{ $post->slug }}" class="btn btn-sm btn-info icon"><i
-                                    class="bi bi-eye"></i></a>
-                            <a href="/dashboard/posts/{{ $post->slug }}/edit" class="btn btn-sm icon btn-warning"><i
-                                    class="bi bi-pencil-square"></i></a>
-                            <form action="/dashboard/posts/{{ $post->slug }}" class="d-inline" method="post">
+                            {{-- <a href="/dashboard/su/categories/{{ $category->nis }}"
+                                class="btn btn-sm btn-info icon"><i class="bi bi-eye"></i></a> --}}
+                            <a href="/dashboard/su/categories/{{ $category->slug }}/edit"
+                                class="btn btn-sm icon btn-warning"><i class="bi bi-pencil-square"></i></a>
+                            <form action="/dashboard/su/categories/{{ $category->slug }}" class="d-inline"
+                                method="post">
                                 @method('delete')
                                 @csrf
-                                <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box"
-                                    data-title="{{ $post->title }}"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box "
+                                    data-title="{{ $category->fullName }}" {{ $category->count() == 1 ? "
+                                    disabled" : '' }}><i class="bi bi-trash"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -47,7 +52,7 @@ use App\Models\Post;
                 </tbody>
             </table>
             <div class="mt-2 d-flex justify-content-center">
-                {{ $posts->links() }}
+                {{ $categories->links() }}
             </div>
         </div>
         @else
@@ -57,16 +62,15 @@ use App\Models\Post;
                     alt="empty">
             </div>
             <div class="empty-desc mt-3">
-                <p>There's no post found</p>
+                <p>There's no Category found</p>
             </div>
             <div class="empty-act mt-3">
-                <a href="/dashboard/posts/create" class="btn btn-primary icon mb-2">Create Post</a>
+                <a href="/dashboard/su/categories/create" class="btn btn-primary icon mb-2">Add Category</a>
             </div>
         </div>
         @endif
     </div>
 </div>
-
 @section('scripts')
 <script type="text/javascript">
     $('.show-alert-delete-box').click(function(event){

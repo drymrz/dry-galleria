@@ -75,7 +75,11 @@
                             </div>
                             <div class="user-img d-flex align-items-center">
                                 <div class="avatar avatar-md">
+                                    @if (auth()->user()->image)
+                                    <img src="/storage/profile-photos/{{ auth()->user()->image }}">
+                                    @else
                                     <img src="/adminview/assets/images/faces/1.jpg">
+                                    @endif
                                 </div>
                             </div>
                         </div>

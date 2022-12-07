@@ -3,7 +3,7 @@
 @section('container')
 <div class="container">
 
-    <div class="row vh-100 align-content-center justify-content-center">
+    <div class="row align-content-center justify-content-center" style="height: 60vh">
         <div style="max-width: 375px">
             <main class="form-signin">
                 <p class="h4 mb-3 text-center " style="font-weight:600">Login</p>
@@ -55,12 +55,10 @@
                         </div>
                         @enderror
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary" style="height: 53px; font-size: 14px; font-weight:600"
+                    <button class="icon-button w-100 btn btn-lg btn-primary"
+                        style="height: 53px; font-size: 14px; font-weight:600; border-radius:25px"
                         type="submit">Login</button>
                 </form>
-                <small class="d-block text-center mt-5">Belum punya akun? <a href="/register"> Buat akun disini
-                        !</a></small>
-                <p class="mt-5 mb-3 text-muted text-center"> <small>&copy; Adry Mirza - 2022</small></p>
             </main>
         </div>
     </div>

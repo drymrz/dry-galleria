@@ -82,9 +82,9 @@ use Illuminate\Support\Facades\Storage;
                                     <form action="/dashboard/post/image/{{ $i->id }}" class="d-inline" method="post">
                                         @method('DELETE')
                                         @csrf
-                                        <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box" {{
-                                            $images->count() == "1" ? 'disabled' : '' }}><i
-                                                class="bi bi-trash"></i></button>
+                                        <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box"><i
+                                                class="bi bi-trash" {{ $images->count() == 1 ? 'disabled' : ''
+                                                }}></i></button>
                                     </form>
                                 </td>
                             </tr>

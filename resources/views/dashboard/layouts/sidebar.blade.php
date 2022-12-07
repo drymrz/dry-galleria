@@ -1,6 +1,5 @@
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
-
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
@@ -48,9 +47,9 @@
                         <i class="bi bi-house-fill"></i>
                         <span>Home Page</span>
                     </a>
-                    <a href="/posts" class='sidebar-link'>
+                    <a href="/categories" class='sidebar-link'>
                         <i class="bi bi-postcard-fill"></i>
-                        <span>Posts Page</span>
+                        <span>Categories Page</span>
                     </a>
                 </li>
 
@@ -69,15 +68,6 @@
                         <span>My Posts</span>
                     </a>
                 </li>
-
-                @if (auth()->user()->isRole != '0')
-                <li class="sidebar-item {{ Request::is('dashboard/members*') ? 'active' : '' }} ">
-                    <a href="/dashboard/members" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
-                        <span>Class Mate</span>
-                    </a>
-                </li>
-                @endif
                 @if (auth()->user()->isRole == '2')
                 <li class="sidebar-item {{ Request::is('dashboard/su*') ? 'active' : '' }} has-sub">
                     <a href="#" class='sidebar-link'>
@@ -89,7 +79,7 @@
                             <a href="/dashboard/su/posts">All Post</a>
                         </li>
                         <li class="submenu-item {{ Request::is('dashboard/su/categories*') ? 'active' : '' }}">
-                            <a href="/dashboard">Categories</a>
+                            <a href="/dashboard/su/categories">Categories</a>
                         </li>
                         <li class="submenu-item {{ Request::is('dashboard/su/users*') ? 'active' : '' }}">
                             <a href="/dashboard/su/users">Registered User</a>

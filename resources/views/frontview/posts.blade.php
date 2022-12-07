@@ -1,119 +1,172 @@
+@php
+use Carbon\Carbon;
+use App\Models\Post;
+@endphp
 @extends('frontview.layouts.main')
+@if(request('category') === "deleted")
+@php
+$posts = Post::where("category_id" , 0)->paginate(7)->withQueryString()
+@endphp
+@endif
 
 @section('container')
-<p class="fs-2 fw-bold c-stisla-dark mb-4 text-center">{{ $title }}</p>
-<div class="row mb-3 justify-content-center">
-    <div class="col-md-6">
-        <form action="/posts">
-            @if (request('category'))
-            <input type="hidden" name="category" value="{{ request('category') }}">
-            @endif
-            @if (request('author'))
-            <input type="hidden" name="author" value="{{ request('author') }}">
-            @endif
-            <div class="input-group mb-3" style="height: 50px">
-                <input name="search" type="text" class="form-control me-3 me-sm-4 px-4" placeholder="Cari Postingan"
-                    value="{{ request('search') }}" style="border-radius: 50px">
-                <button class="btn btn-danger" type="submit" style="border-radius: 50px; width:60px"><i
-                        class="bi bi-search"></i></button>
-            </div>
-        </form>
-    </div>
-</div>
 
 @if ($posts->count())
-<div class="top-post d-flex flex-column flex-lg-row align-items-center py-5">
-    <div class="col-12 col-lg-7 pe-lg-4">
-        @if($posts[0]->images->isNotEmpty())
-        <a href="/posts/{{ $posts[0]->slug }}">
-            <div class="d-flex align-items-center justify-content-center"
-                style="max-height: 300px ; overflow:hidden; margin: auto; border-radius:10px">
-                <img class="img-fluid" src="{{ asset('storage/post-images/' . $posts[0]->images[0]->image_name) }}"
-                    alt="{{ $posts[0]->category->name }}">
-            </div>
-        </a>
-        @else
-        <a href="/posts/{{ $posts[0]->slug }}">
-            <div class="d-flex align-items-center justify-content-center"
-                style="max-height: 300px ; overflow:hidden; margin: auto; border-radius:10px">
-                <img class="img-fluid" src="https://source.unsplash.com/1200x600?{{ $posts[0]->category->name }}"
-                    alt="{{ $posts[0]->category->name }}">
-            </div>
-        </a>
-        @endif
-    </div>
-    <div class="d-flex flex-column col-12 col-lg-5 align-items-center align-items-sm-start justify-content-center">
-        <div class="text-center text-sm-start">
-            <p class="text-uppercase text-muted fw-bold pt-2 pt-lg-0" style="letter-spacing: 1.2px; font-size:17px">
-                Postingan
-                Teratas</p>
-            <a href="/posts/{{ $posts[0]->slug }}">
-                <p class="c-stisla-dark fs-4 fw-bold">{{ $posts[0]->title }}</p>
-            </a>
-            <p class="m-0">{!! $posts[0]->excerpt !!}</p>
-        </div>
-        <div class="author-container d-flex mt-3 flex-column flex-md-row align-items-center">
-            <div class="avatar-author">
-                <img src="/img/team/team-1.jpg" class="img-fluid" style="max-width:56px;border-radius:50px" alt="">
-            </div>
-            <div class="author-info d-flex align-items-md-start ps-md-4">
-                <a href='{{ $posts[0]->user == null ? "#" : "/posts?author=" . $posts[0]->user->username}}'>
-                    <p class="c-stisla-dark fw-bold m-0">{{ $posts[0]->user == null ? "Deleted User" :
-                        $posts[0]->user->name }}</p>
-                </a>
-                <p class="m-0">{{ $posts[0]->created_at->diffForHumans() }}</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-@if ($posts->count() >1)
-
-<p class="my-5 fs-2 fw-bold text-center text-lg-start c-stisla-dark">Postingan Lainnya</p>
-
-<div class="row">
-    @foreach ($posts->skip(1) as $post)
-    <div class="col-md-4 d-flex flex-column mb-3">
-        @if ($post->images->isNotEmpty())
-        <div class="col-12">
-            <a href="/posts/{{ $post->slug }}">
-                <div class="d-flex align-items-center justify-content-center post-images"
-                    style="overflow:hidden; margin: auto;">
-                    <img class="img-fluid" style="border-radius:10px"
-                        src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}"
-                        alt="{{ $post->category->name }}">
+<section id="hero">
+    <div class="container-xl">
+        <div class="row gy-4">
+            @if ($posts[0]->images->isNotEmpty())
+            <div class="col-lg-10" style="margin: auto">
+                <!-- featured post large -->
+                <div class="post featured-post-lg">
+                    <div class="details clearfix">
+                        @if ($posts[0]->category != null)
+                        <a href="/posts?category={{ $posts[0]->category->slug }}" class="category-badge">{{
+                            $posts[0]->category->name }}</a>
+                        @endif
+                        <h2 class="post-title"><a href="/posts/{{ $posts[0]->slug }}">{{ $posts[0]->title }}</a></h2>
+                        <ul class="meta list-inline mb-0">
+                            <li class="list-inline-item"><a href="{{ $posts[0]->user == null ? " #" : "/posts?author=" .
+                                    $posts[0]->user->username}}">{{ $posts[0]->user == null ? "Deleted User" :
+                                    $posts[0]->user->name }}</a>
+                            </li>
+                            <li class="list-inline-item">{{ Carbon::parse($posts[0]->moment_date)->format('d M Y')
+                                }}
+                            </li>
+                            <li class="list-inline-item">Posted {{ $posts[0]->created_at->diffForHumans() }} </li>
+                        </ul>
+                    </div>
+                    <a href="/posts/{{ $posts[0]->slug }}">
+                        <div class="thumb rounded">
+                            <div class="inner data-bg-image"
+                                data-bg-image="{{ asset('storage/post-images/' . $posts[0]->images[0]->image_name) }}"
+                                style="background-image: url({{ asset('storage/post-images/' . $posts[0]->images[0]->image_name) }});">
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </a>
-        </div>
-        @else
-        <div class="col-12">
-            <a href="/posts/{{ $post->slug }}">
-                <div class="d-flex align-items-center justify-content-center post-images"
-                    style="max-height: 15rem ; overflow:hidden; margin: auto;">
-                    <img class="img-fluid" style="border-radius:10px"
-                        src="https://source.unsplash.com/500x400?{{ $post->category->name }}"
-                        alt="{{ $post->category->name }}">
+                @else
+                <div class="col-lg-10" style="margin: auto">
+                    <!-- featured post large -->
+                    <div class="post featured-post-lg">
+                        <div class="details clearfix">
+                            @if ($posts[0]->category != null)
+                            <a href="/posts?category={{ $posts[0]->category->slug }}" class="category-badge">{{
+                                $posts[0]->category->name }}</a>
+                            @endif
+                            <h2 class="post-title"><a href="/posts/{{ $posts[0]->slug }}">{{ $posts[0]->title }}</a>
+                            </h2>
+                            <ul class="meta list-inline mb-0">
+                                <li class="list-inline-item"><a href="{{ $posts[0]->user == null ? " #"
+                                        : "/posts?author=" . $posts[0]->user->username}}">{{ $posts[0]->user == null ?
+                                        "Deleted User" :
+                                        $posts[0]->user->name }}</a>
+                                </li>
+                                <li class="list-inline-item">{{ $posts[0]->created_at->diffForHumans() }} </li>
+                            </ul>
+                        </div>
+                        <a href="/posts/{{ $posts[0]->slug }}">
+                            <div class="thumb rounded">
+                                <div class="inner data-bg-image"
+                                    data-bg-image="https://source.unsplash.com/1200x600?{{ $posts[0]->category->name }}"
+                                    style="background-image: url(https://source.unsplash.com/1200x600?{{ $posts[0]->category->name }});">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    @endif
                 </div>
-            </a>
-        </div>
-        @endif
-        <div class="d-flex flex-column py-3">
-            <div class="d-flex justify-content-sm-between justify-content-center h-mb-1">
-                <p style="font-weight: 600" class="c-stisla-dark">{{ $post->created_at->format('d M') }} &#x2022; <a
-                        class="c-stisla-dark" href="/posts?category={{ $post->category->slug }}"> {{
-                        $post->category->name }} </a></p>
             </div>
-            <a class=" c-stisla-dark fs-5 fw-bold text-center text-md-start" href="/posts/{{ $post->slug }}">
-                <p>{{ $post->title }}</p>
-            </a>
-            <p class="text-muted body-text text-center text-md-start">{!! $post->excerpt !!}</p>
+        </div>
+</section>
+@if ($posts->count() > 1)
+<section class="main-content">
+    <div class="container-xl">
+        <div class="row gy-4">
+            <div class="col-lg-12">
+                <div class="section-header">
+                    <h3 class="section-title">Postingan Terbaru</h3>
+                    <img src="{{ url('/frontview/katen/wave.svg') }}" class="wave" alt="wave">
+                </div>
+                <div class="row gy-4">
+                    @foreach ($posts->skip(1) as $post)
+                    <div class="col-sm-6">
+                        <!-- post -->
+                        <div class="post post-grid rounded bordered">
+                            <div class="thumb top-rounded">
+                                @if ($post->category != null)
+                                <a href="/posts?category={{ $post->category->slug }}"
+                                    class="category-badge position-absolute">{{
+                                    $post->category->name }}</a>
+                                @endif
+                                <a href="/posts/{{ $post->slug }}">
+                                    @if ($post->images->isNotEmpty())
+                                    <div class="inner d-flex justify-content-center align-items-center"
+                                        style="overflow: hidden; max-height: 350px">
+                                        <img class="img-fluid"
+                                            src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}"
+                                            alt="post-image">
+                                    </div>
+                                    @else
+                                    <div class="inner d-flex justify-content-center align-items-center"
+                                        style="overflow: hidden; max-height: 350px">
+                                        <img class="img-fluid"
+                                            src="https://source.unsplash.com/700x500?{{ $post->category->name }}"
+                                            alt="post-image">
+                                    </div>
+                                    @endif
+                                </a>
+                            </div>
+                            <div class="details">
+                                <ul class="meta list-inline mb-0">
+                                    <li class="list-inline-item"><a href="{{ $post->user == null ? " #"
+                                            : "/posts?author=" . $post->user->username}}"><img
+                                                style="max-width:30px;border-radius:50px"
+                                                src="{{ $post->user->image ? asset('storage/profile-photos/' . $post->user->image) : '/img/team/team-1.jpg'}}"
+                                                class="author" alt="author">{{ $post->user == null ? "Deleted User" :
+                                            $post->user->name }}</a></li>
+                                    <li class="list-inline-item">{{ Carbon::parse($post->moment_date)->format('d M
+                                        Y')}}</li>
+                                    <li class="list-inline-item">Posted on {{ $post->created_at->format('d M Y')}}</li>
+                                </ul>
+                                <h5 class="post-title mb-3 mt-3"><a href="/posts/{{ $post->slug }}">{{
+                                        $post->title
+                                        }}</a>
+                                </h5>
+                            </div>
+                            <div class="post-bottom clearfix d-flex align-items-center">
+                                <div class="social-share me-auto">
+                                    <button class="toggle-button icon-share"></button>
+                                    <ul class="icons list-unstyled list-inline mb-0">
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a>
+                                        </li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a>
+                                        </li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                        </li>
+                                        <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a>
+                                        </li>
+                                        <li class="list-inline-item"><a href="#"><i
+                                                    class="fab fa-telegram-plane"></i></a></li>
+                                        <li class="list-inline-item"><a href="#"><i class="far fa-envelope"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="more-button float-end">
+                                    <a href="/posts/{{ $post->slug }}"><span class="icon-options"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
-    @endforeach
-</div>
+</section>
 @endif
 @else
-<p class="text-center fs-4">No post found.</p>
+<p class="text-center fs-4 my-4">Tidak ada postingan yang ditemukan.</p>
 @endif
 <div class="mb-5 mt-2 d-flex justify-content-center">
 

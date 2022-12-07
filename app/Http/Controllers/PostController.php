@@ -13,9 +13,11 @@ class PostController extends Controller
     {
         $title = '';
 
-        if (request('category')) {
+        if (request('category') === "deleted") {
+            $title = ' Kategori Uncategorized';
+        } else if (request('category')) {
             $category = Category::firstWhere('slug', request('category'));
-            $title = ' di ' . $category->name;
+            $title = ' Kategori ' . $category->name;
         }
 
         if (request('author')) {
@@ -23,10 +25,14 @@ class PostController extends Controller
             $title = ' oleh ' . $author->name;
         }
 
+        if (request('search')) {
+            $title = 'search';
+        }
+
         return view('frontview.posts', [
             "title" => 'Semua Postingan' . $title,
             "active" => 'posts',
-            "posts" => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(7)->withQueryString(),
+            "posts" => Post::filter(request(['search', 'category', 'author']))->where('status', '0')->orderBy('moment_date', 'desc')->paginate(7)->withQueryString(),
         ]);
     }
 
@@ -36,7 +42,7 @@ class PostController extends Controller
             "title" => 'Post',
             "active" => 'posts',
             "post" => $post,
-            "rec" => Post::whereNotIn('id', [$post->id])->inRandomOrder()->limit(5)->get()
+            "rec" => Post::whereNotIn('id', [$post->id])->inRandomOrder()->limit(4)->get()
         ]);
     }
 }

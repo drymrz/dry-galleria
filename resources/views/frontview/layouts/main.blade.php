@@ -5,41 +5,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- google font --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&amp;display=swap"
-        rel="stylesheet">
-    {{-- bootstrap --}}
-    <link href="/frontview/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/frontview/css/style.css">
-    <link rel="stylesheet" href="/frontview/css/custom.css">
-    {{-- icons --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link href="/frontview/vendor/boxicons-2.1.2/css/boxicons.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="/frontview/katen/bootstrap.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/frontview/katen/all.min.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/frontview/katen/slick.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/frontview/katen/simple-line-icons.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/frontview/katen/style.css" type="text/css" media="all">
 
     <title>Halaman {{ $title }} | RPL Blog </title>
-    <style>
-        * {
-            font-family: "Poppins"
-        }
-    </style>
 </head>
 
 <body>
 
     @include('frontview.partials.navbar')
-    <div class="{{ $active != 'posts' ? '' : 'container mt-5 pt-5 px-0' }}">
-        <div class="{{ $active != 'posts'? '' : 'pt-5' }}">
+    @if ($active == "posts" && $title != 'Semua Postingan' && $title !='Post')
+    <section class="page-header mb-4">
+        <div class="container-xl">
+            <div class="text-center">
+                @if (request('search'))
+                <h1 class="mt-0 mb-2 " style="font-size: 26px">Menampilkan hasil pencarian "{{ request('search') }}"
+                </h1>
+                @else
+                <h1 class="mt-0 mb-2" style="font-size: 26px">{{ $title }}</h1>
+                @endif
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item d-none d-lg-block"><a href="/">Beranda</a></li>
+                        @if (request('search'))
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Search
+                        </li>
+                        @endif
+                        @if (request('category'))
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">{{ request('category') }}
+                        </li>
+                        @endif
+                        @if (request('author'))
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">{{ ltrim($title,"Semua
+                            Postingan oleh"); }}
+                        </li>
+                        @endif
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    @if($active == "categories")
+    <section class="page-header mb-4">
+        <div class="container-xl">
+            <div class="text-center">
+                <h1 class="mt-0 mb-2" style="font-size: 26px">Semua Kategori</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center mb-0">
+                        <li class="breadcrumb-item d-none d-lg-block"><a href="/">Beranda</a></li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Kategori
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    <div class="{{ $active != 'posts' ? '' : 'container px-0' }}">
+        <div class="{{ $active != 'posts'? '' : 'pt-3' }}">
             @yield('container')
         </div>
     </div>
-
-    <script src="/frontview/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @include('frontview.partials.search')
+    @include('frontview.partials.side-menu')
+    @include('frontview.partials.footer')
     <script>
-        $(".nav-link").click(function (e) { 
-            $("#m-navbtn").click()
-        });
+        function returnTop(){
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0; 
+        }
     </script>
+
+    <script src="/frontview/katen/jquery.min.js"></script>
+    <script src="/frontview/katen/popper.min.js"></script>
+    <script src="/frontview/katen/bootstrap.min.js"></script>
+    <script src="/frontview/katen/slick.min.js"></script>
+    <script src="/frontview/katen/jquery.sticky-sidebar.min.js"></script>
+    <script src="/frontview/katen/custom.js"></script>
 </body>
 
 </html>

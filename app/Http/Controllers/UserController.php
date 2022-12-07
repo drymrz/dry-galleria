@@ -90,7 +90,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('dashboard.users.edit', [
+            "user" => $user,
+            "active" => "Edit User"
+        ]);
     }
 
     /**
@@ -102,7 +105,33 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $rules = [
+            'name' => 'required|max:70',
+            'isRole' => "required",
+        ];
+
+        if ($request->username != $user->username) {
+            $rules['username'] = 'required|unique:users';
+        }
+        if ($request->email != $user->email) {
+            $rules['email'] = 'required|email:dns|unique:users';
+        }
+
+        $validatedData = $request->validate($rules);
+
+        if ($request->has('image')) {
+            if ($request->oldImage) {
+                Storage::delete("/profile-photos/" . $request->oldImage);
+            }
+            $imageName = $request['username'] . '-image-' . rand(1, 2000) . '.jpg';
+            Storage::move('/profile-photos/' . $request->image, '/profile-photos/' . $imageName);
+            $validatedData['image'] = $imageName;
+        }
+
+        User::where('username', $user->username)->update($validatedData);
+
+        toast('User has been updated', 'success');
+        return redirect('/dashboard/su/users');
     }
 
     /**
