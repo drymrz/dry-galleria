@@ -4,6 +4,13 @@
 <form class="my-4" id="postForm" action="/dashboard/posts" method="post" enctype="multipart/form-data">
     <div class="row justify-content-center">
         <div class="col-lg-6">
+            @if($errors->any())
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-light-danger color-danger">
+                <i class="bi bi-exclamation-circle"></i> {{$error}}
+            </div>
+            @endforeach
+            @endif
             <div class="card">
                 <div class="card-body">
                     @csrf

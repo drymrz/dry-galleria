@@ -92,7 +92,8 @@ $posts = Post::where("category_id" , 0)->paginate(7)->withQueryString()
                     @foreach ($posts->skip(1) as $post)
                     <div class="col-sm-6">
                         <!-- post -->
-                        <div class="post post-grid rounded bordered">
+                        <div class="post post-grid rounded bordered"
+                            style="box-shadow: -2px 4px 5px 0px rgb(0 0 0 / 5%);">
                             <div class="thumb top-rounded">
                                 @if ($post->category != null)
                                 <a href="/posts?category={{ $post->category->slug }}"
@@ -133,6 +134,8 @@ $posts = Post::where("category_id" , 0)->paginate(7)->withQueryString()
                                         $post->title
                                         }}</a>
                                 </h5>
+                                <p class="excerpt mb-0">{{ $post->excerpt }}
+                                </p>
                             </div>
                             <div class="post-bottom clearfix d-flex align-items-center">
                                 <div class="social-share me-auto">

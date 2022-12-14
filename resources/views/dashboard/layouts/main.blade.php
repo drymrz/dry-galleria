@@ -104,6 +104,9 @@
     <script src="/adminview/assets/js/bootstrap.js"></script>
     <script src="/adminview/assets/js/app.js"></script>
 
+    {{-- Chart --}}
+    <script src="/adminview/assets/extensions/apexcharts/apexcharts.min.js"></script>
+
     {{-- Trix JS --}}
     <script type="text/javascript" src="/adminview/js/trix.js"></script>
 

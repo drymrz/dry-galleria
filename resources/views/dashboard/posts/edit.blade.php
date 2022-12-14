@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\Storage;
     @method('put')
     <div class="row justify-content-center">
         <div class="col-lg-7">
+            @if($errors->any())
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-light-danger color-danger">
+                <i class="bi bi-exclamation-circle"></i> {{$error}}
+            </div>
+            @endforeach
+            @endif
             <div class="card">
                 <div class="card-body">
                     @csrf
@@ -79,13 +86,14 @@ use Illuminate\Support\Facades\Storage;
                                 </td>
                                 <td style="width:1px">
                                     <form></form>
+                                    @if ($images->count() > 1)
                                     <form action="/dashboard/post/image/{{ $i->id }}" class="d-inline" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-sm btn-danger icon border-0 show-alert-delete-box"><i
-                                                class="bi bi-trash" {{ $images->count() == 1 ? 'disabled' : ''
-                                                }}></i></button>
+                                                class="bi bi-trash"></i></button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -151,7 +159,7 @@ use Illuminate\Support\Facades\Storage;
     })
     
     function uploadBtnState(){
-        if($('#title,#body').val().length > 0 && $('#category').val().length > 0 ){
+        if($('#title,#body').val().length > 0){
             $('#uploadBtn').prop('disabled', false);
         }else{
             $('#uploadBtn').prop('disabled', true);

@@ -57,26 +57,8 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', function () {
-    if (auth()->user()->isRole == "0") {
-        return view('dashboard.main.user-index', [
-            "active" => 'Dashboard Statistic'
-        ]);
-    } else if (auth()->user()->isRole == "1") {
-        return view('dashboard.main.admin-index', [
-            "active" => 'Dashboard Statistic'
-        ]);
-    } else {
-        return view('dashboard.main.su-index', [
-            "active" => 'Dashboard Statistic'
-        ]);
-    }
-})->middleware('auth');
-
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/postadmin', [DashboardPostController::class, 'admin'])->middleware('admin');
-
-
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
 
 Route::get('/dashboard/su/posts', function () {

@@ -5,6 +5,7 @@
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Category;
+use Carbon\Carbon;
 @endphp
 <div class="page-content">
     <section class="row flex-column-reverse flex-sm-row align-items-center">
@@ -101,5 +102,165 @@ use App\Models\Category;
             </div>
         </div>
     </section>
+    <section class="row">
+        <div class="col-12 col-lg-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Posts Statistic 2022</h4>
+                </div>
+                <div class="card-body">
+                    <div id="chart-profile-visit"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Post by Categories</h4>
+                </div>
+                <div class="card-body">
+                    <div id="chart-visitors-profile">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col-12 col-lg-8 order-2 order-lg-1">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Latest Comments</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-lg">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Comment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-md">
+                                                <img src="adminview/assets/images/faces/5.jpg">
+                                            </div>
+                                            <p class="font-bold ms-3 mb-0">Si Cantik</p>
+                                        </div>
+                                    </td>
+                                    <td class="col-auto">
+                                        <p class="mb-0">
+                                            Congratulations on your graduation!
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar avatar-md">
+                                                <img src="adminview/assets/images/faces/2.jpg">
+                                            </div>
+                                            <p class="font-bold ms-3 mb-0">Si Ganteng</p>
+                                        </div>
+                                    </td>
+                                    <td class="col-auto">
+                                        <p class="mb-0">
+                                            Wow amazing design! Can you make another
+                                            tutorial for this design?
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4 order-1 order-lg-2">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Your Recent Posts</h4>
+                </div>
+                <div class="card-content pb-4">
+                    @foreach ($recentPosts as $post)
+                    <a href="/posts/{{ $post->slug }}" target="_blank">
+                        <div class="recent-message d-flex px-4 py-3">
+                            <div class="avatar avatar-lg">
+                                <img src="{{ asset('storage/post-images/' . $post->images[0]->image_name) }}">
+                            </div>
+                            <div class="name ms-4">
+                                <h5 class="mb-1">{{ $post->title }}</h5>
+                                <h6 class="text-muted mb-0">{{ Carbon::parse($post->moment_date)->format('d M Y') }}
+                                </h6>
+                            </div>
+                        </div>
+                    </a>
+                    @endforeach
+                    <div class="px-4">
+                        <a href="dashboard/posts">
+                            <button class="btn btn-block btn-xl btn-outline-primary font-bold mt-3">
+                                Other Posts
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
+@section('scripts')
+<script>
+    var optionsProfileVisit = {
+        annotations: {
+            position: "back",
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        chart: {
+            type: "bar",
+            height: 300,
+        },
+        fill: {
+            opacity: 1,
+        },
+            plotOptions: {},
+            series: [
+                {   
+                    name: "Total Posts",
+                    data: {!! json_encode($postCount) !!},
+                },
+            ],
+        colors: "#435ebe",
+        xaxis: {
+            categories: [
+                {!! str_replace(array("[","]"), "", json_encode($monthName)) !!}
+            ]
+        }
+    };
+
+    let optionsVisitorsProfile = {
+        series: {!! json_encode($postByCategoryCount) !!},
+        labels: {!! json_encode($categoryName) !!},
+        chart: {
+            type: "donut",
+            width: "100%",
+            height: "350px",
+        },
+        legend: {
+            position: "bottom",
+        },
+        plotOptions: {
+            pie: {
+            donut: {
+            size: "30%",
+            },
+        },
+        },
+    };
+</script>
+<script src="/adminview/assets/js/pages/dashboard.js"></script>
+@endsection
 @endsection
