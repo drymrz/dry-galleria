@@ -3,8 +3,37 @@ $(window).on("load", function () {
     /*=========================================================================
             Preloader
     =========================================================================*/
-    $("#preloader").delay(1500).fadeOut("slow");
+    $("#preloader").delay(650).fadeOut("slow");
+    $("html, body").css({
+        overflow: "auto",
+    });
 });
+
+(function () {
+    $("html, body").css({
+        overflow: "hidden",
+    });
+    function id(v) {
+        return document.getElementById(v);
+    }
+    var ovrl = id("preloader"),
+        percent = id("percent"),
+        img = document.images,
+        c = 0,
+        tot = img.length;
+
+    function imgLoaded() {
+        c += 1;
+        var perc = (((100 / tot) * c) << 0) + "% ..";
+        percent.innerText = "Loading " + perc;
+    }
+    for (var i = 0; i < tot; i++) {
+        var tImg = new Image();
+        tImg.onload = imgLoaded;
+        tImg.onerror = imgLoaded;
+        tImg.src = img[i].src;
+    }
+})();
 
 /*=========================================================================
             Home Slider
@@ -231,7 +260,10 @@ $(function () {
     $(".post button.toggle-button").each(function () {
         $(this).on("click", function (e) {
             $(this).next(".social-share .icons").toggleClass("visible");
-            $(this).toggleClass("icon-close").toggleClass("icon-share");
+            setTimeout(() => {
+                $(this).next(".social-share .icons").toggleClass("visible");
+            }, 5000);
+            // $(this).toggleClass("icon-close").toggleClass("icon-share");
         });
     });
 

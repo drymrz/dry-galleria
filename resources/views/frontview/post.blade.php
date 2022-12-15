@@ -65,6 +65,7 @@ use Carbon\Carbon;
                         @endif
                     </div>
                     <!-- post content -->
+                    {!! $post->body !!}
                 </div>
             </div>
 
@@ -128,7 +129,7 @@ use Carbon\Carbon;
                         <!-- widget categories -->
                         <div class="widget rounded">
                             <div class="widget-header text-center">
-                                <h3 class="widget-title">Kategori Tersedia</h3>
+                                <h3 class="widget-title">Kategori Postingan</h3>
                                 <img src="{{ url('/frontview/katen/wave.svg') }}" class="wave" alt="wave">
                             </div>
                             <div class="widget-content">

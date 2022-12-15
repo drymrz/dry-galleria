@@ -139,20 +139,9 @@ $posts = Post::where("category_id" , 0)->paginate(7)->withQueryString()
                             </div>
                             <div class="post-bottom clearfix d-flex align-items-center">
                                 <div class="social-share me-auto">
-                                    <button class="toggle-button icon-share"></button>
+                                    <button class="toggle-button icon-share" data-slug="{{ $post->slug }}"></button>
                                     <ul class="icons list-unstyled list-inline mb-0">
-                                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#"><i class="fab fa-pinterest"></i></a>
-                                        </li>
-                                        <li class="list-inline-item"><a href="#"><i
-                                                    class="fab fa-telegram-plane"></i></a></li>
-                                        <li class="list-inline-item"><a href="#"><i class="far fa-envelope"></i></a>
-                                        </li>
+                                        <li class="list-inline-item">Link copied</li>
                                     </ul>
                                 </div>
                                 <div class="more-button float-end">
@@ -172,7 +161,18 @@ $posts = Post::where("category_id" , 0)->paginate(7)->withQueryString()
 <p class="text-center fs-4 my-4">Tidak ada postingan yang ditemukan.</p>
 @endif
 <div class="mb-5 mt-2 d-flex justify-content-center">
-
     {{ $posts->links() }}
 </div>
+@section('scripts')
+<script>
+    $(".icon-share").click(function (e) {
+        var $temp = $("<input>");
+        var $link = location.hostname + "/posts/" + $(this).data("slug");
+        $("body").append($temp);
+        $temp.val($link).select();
+        document.execCommand("copy");
+        $temp.remove();
+        });
+</script>
+@endsection
 @endsection

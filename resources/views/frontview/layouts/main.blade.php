@@ -11,10 +11,11 @@
     <link rel="stylesheet" href="/frontview/katen/simple-line-icons.css" type="text/css" media="all">
     <link rel="stylesheet" href="/frontview/katen/style.css" type="text/css" media="all">
 
-    <title>Halaman {{ $title }} | RPL Blog </title>
+    <title>Adry's Galleria | {{ $title }}</title>
 </head>
 
 <body>
+    @if ($active != "login")
     <div id="preloader">
         <div class="book">
             <div class="inner">
@@ -41,9 +42,13 @@
                 <li></li>
                 <li></li>
                 <li></li>
-            </ul>
+        </div>
+        </ul>
+        <div class="d-flex align-items-center justify-content-center min-vh-100">
+            <h3 class="widget-title mt-5 pt-5 percent" style="font-size: 16px" id="percent">Loading Content..</h3>
         </div>
     </div>
+    @endif
     @include('frontview.partials.navbar')
     @if ($active == "posts" && $title != 'Semua Postingan' && $title !='Post')
     <section class="page-header mb-4">
@@ -116,6 +121,8 @@
     <script src="/frontview/katen/slick.min.js"></script>
     <script src="/frontview/katen/jquery.sticky-sidebar.min.js"></script>
     <script src="/frontview/katen/custom.js"></script>
+
+    @yield('scripts')
 </body>
 
 </html>
