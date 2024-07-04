@@ -43,6 +43,7 @@
     preslug = preslug.replace(/ /g, "-");
     slug.value = preslug.toLowerCase();
     });
+    console.log('abs')
 </script>
 @endsection
 @endsection
